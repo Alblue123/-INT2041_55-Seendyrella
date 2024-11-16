@@ -10,9 +10,10 @@ const config: Config = {
   ],
   theme: {
     extend: {
-      colors: {
-        
+      backgroundImage: {
+        "auth-image": "url('/images/authimage.png')",
       },
+      colors: {},
       borderRadius: {
         lg: "var(--radius)",
         md: "calc(var(--radius) - 2px)",
@@ -23,6 +24,7 @@ const config: Config = {
         robotoslab: ["Roboto Slab", "serif"],
         robotoflex: ["Roboto Flex", "sans - serif"],
         inter: ["Inter", "sans - serif"],
+        itim: ["Itim", "cursive"],
       },
     },
     screens: {
