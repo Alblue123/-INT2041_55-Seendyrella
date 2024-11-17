@@ -11,9 +11,9 @@ export async function POST(request: Request) {
 
         const hashedPassword = await hash(password, 10);
 
-        'use server';
         const sql = neon(`${process.env.DATABASE_URL}`)
-        await sql('INSERT INTO users (username, email, password) VALUES ($1, $2, $3)', [username, email, hashedPassword]);
+        const response = await sql
+        ('INSERT INTO users (username, email, password) VALUES ($1, $2, $3)', [username, email, hashedPassword]);
 
     } catch (e) {
         console.log({ e });
