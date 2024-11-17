@@ -1,6 +1,5 @@
-"use client"
+"use client";
 import { Button, Card, CardBody, CardHeader, Input, Link } from "@nextui-org/react";
-import Image from "next/image";
 import { useRouter } from "next/navigation";
 
 export default function Login() {
