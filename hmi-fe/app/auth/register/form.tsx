@@ -8,7 +8,7 @@ export default function RegisterForm() {
     const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         const formData = new FormData(e.currentTarget);
-        const response = fetch('../../hmi-be/api/auth/register', {
+        const response = fetch('/api/auth/register', {
             method: "POST",
             body: JSON.stringify({
                 username: formData.get("username"),
