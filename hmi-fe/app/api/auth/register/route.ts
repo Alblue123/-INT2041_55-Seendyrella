@@ -40,10 +40,13 @@ export async function POST(req: Request) {
 
         const { password: newUserPassword, ...rest} = newUser;
 
+        console.log("New user created with hashed password:", newUserPassword); 
+
         return NextResponse.json({user: rest, message: "success"}, {status: 201});
 
 
     } catch(e) {
+        console.error(e);
         return NextResponse.json({ message: "Internal Server Error" }, { status: 500 });
     }
 }
