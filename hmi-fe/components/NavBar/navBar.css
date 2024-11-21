@@ -1,0 +1,23 @@
+@import url('https://fonts.googleapis.com/css2?family=Funnel+Sans:ital,wght@0,300..800;1,300..800&family=Itim&display=swap');
+
+@import url('https://fonts.googleapis.com/css2?family=Funnel+Sans:ital,wght@0,300..800;1,300..800&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Itim&display=swap');
+color-code {
+    color: #1849D6;
+}
+
+#seendyrella{
+    font-family: "Itim", cursive;
+  font-weight: 600;
+  font-size: 2em;
+  font-style: normal;
+  color: #1849D6;
+}
+
+.navBarButton, button {
+    display: inline;
+    font-family: "Inter", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 500;
+  font-style: normal;
+  color: #1849D6;
+}
