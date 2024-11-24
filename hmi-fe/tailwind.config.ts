@@ -13,6 +13,9 @@ const config: Config = {
       backgroundImage: {
         "auth-image": "url('/images/authimage.png')",
       },
+      uploadButton: {
+        "upload-image" : "url('/images/upload.png')",
+      },
       colors: {},
       borderRadius: {
         lg: "var(--radius)",
