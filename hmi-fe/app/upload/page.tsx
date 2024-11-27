@@ -79,13 +79,13 @@ export default function BookUpLoadingPage() {
     };
 
     return (
-        <main className="flex-1 flex flex-col items-center justify-center bg-gradient-to-b from-blue-200 to-blue-50 p-12">
-            <h2 className="text-2xl font-bold text-blue-800 mb-2">
+<main className="flex-1 flex flex-col items-center justify-start p-12 h-screen" style={{ background: 'linear-gradient(to bottom, #dfe8ff, #ffffff)' }}>
+<h2 className="text-2xl font-bold text-blue-800 mb-2">
                 Your best way to read your document
             </h2>
             <div className="relative flex items-center justify-center min-h-96">
                 <div
-                    className={`relative flex flex-col items-center justify-center w-[450px] h-[350px] rounded-lg ${
+                    className={`relative flex flex-col items-center justify-center w-[40rem] h-[30rem] rounded-lg ${
                         dragging ? "bg-blue-100" : ""
                     }`}
                     onDragOver={handleDragOver}

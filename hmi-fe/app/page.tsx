@@ -1,8 +1,9 @@
+import BookUpLoadingPage from "./upload/page";
 
 export default function Home() {
   return (
     <div>
-      Main Page
+      <BookUpLoadingPage/>
     </div>
   );
 }
