@@ -9,25 +9,25 @@ export default function NavBar() {
     return (
         <div>
             {/* desktop */}
-            <Navbar className="mobile:hidden tablet:hidden" isBordered>
-                <NavbarBrand>
-                    <p className="font-bold text-inherit" id = 'seendyrella'>Seendyrella</p>
+            <Navbar className="" isBordered>
+                <NavbarBrand className="" >
+                    <p className="font-bold text-inherit hover:cursor-pointer" id='seendyrella' onClick={() => router.push("/")}>Seendyrella</p>
                 </NavbarBrand>
-                <NavbarContent justify="end" className = 'navBarButton'>
-                    <NavbarItem className="lg:flex font-bold">
+                <NavbarContent justify="end" className ='navBarButton'>
+                    <NavbarItem className="lg:flex font-bold hover:cursor-pointer">
                         <Link onClick={() => router.push("/")}>Upload</Link>
                     </NavbarItem>
-                    <NavbarItem className="lg:flex font-bold">
-                        <Link onClick={() => router.push("/auth/login")}>Your library</Link>
+                    <NavbarItem className="lg:flex font-bold hover:cursor-pointer">
+                        <Link onClick={() => router.push("/library")}>Your library</Link>
                     </NavbarItem>
                     <NavbarItem className="lg:flex font-bold">
-                        <Link onClick={() => router.push("/auth/login")}>Login</Link>
+                        <Link onClick={() => router.push("/auth/login")} className="hidden">Login</Link>
                     </NavbarItem>
                     <NavbarItem className="lg:flex font-bold">
                         {/* <Button as={Link} color="primary" onClick={() => router.push("/auth/register")} variant="flat">
                             Sign Up
                         </Button> */}
-                        <Link onClick={() => router.push("/auth/register")}>Sign up</Link>
+                        <Link onClick={() => router.push("/auth/register")} className="hidden">Sign up</Link>
 
                     </NavbarItem>
                 </NavbarContent>
