@@ -43,44 +43,45 @@ const files: FileItem[] = [
 
 export default function FileLibrary() {
     return (
-        <div className="w-full max-w-6xl mx-auto p-4">
-            <h1 className="flex justify-center text-4xl font-bold text-blue-800 mb-8">Your Library</h1>
+        <>
+        <div className="w-full h-screen flex items-center justify-center bg-gray-100">
+        <h1 className="flex justify-center text-4xl font-bold text-blue-800 mb-8">Your Library</h1>
 
-            <div className="overflow-x-auto">
-                <table className="w-full border-collapse bg-white rounded-lg shadow">
+            {/* Centering the table */}
+            
+            <div className="overflow-x-auto w-[60rem]">
+                <table className="w-full border-collapse bg-white rounded-lg shadow-lg">
+
                     <thead>
                         <tr className="text-left border-b">
-                            <th className="p-4 font-semibold text-gray-700">File</th>
-                            <th className="p-4 font-semibold text-gray-700">Created At</th>
-                            <th className="p-4 font-semibold text-gray-700">Action</th>
+                            <th className="p-6 font-semibold text-gray-700 text-lg">File</th>
+                            <th className="p-6 font-semibold text-gray-700 text-lg">Action</th>
                         </tr>
                     </thead>
+
                     <tbody>
                         {files.map((file) => (
                             <tr key={file.id} className="border-b hover:bg-gray-50">
-                                <td className="p-4">
-                                    <div className="flex items-center gap-3">
+                                <td className="p-6">
+                                    <div className="flex items-center gap-4">
                                         <img
                                             src={file.avatar}
                                             alt={file.name}
-                                            className="w-8 h-8 rounded-lg object-cover"
+                                            className="w-12 h-12 rounded-lg object-cover"
                                         />
                                         <div>
-                                            <p className="font-medium text-gray-900">{file.name}</p>
+                                            <p className="font-medium text-gray-900 text-lg">{file.name}</p>
                                             <p className="text-sm text-gray-500">{file.department}</p>
                                         </div>
                                     </div>
                                 </td>
-                                <td className="p-4 text-gray-600">
-                                    {file.department}
-                                </td>
-                                <td className="p-4">
-                                    <div className="flex items-center gap-4">
-                                        <button className="p-2 hover:bg-gray-100 rounded-full">
-                                            <Download className="w-5 h-5 text-gray-400" />
+                                <td className="p-6">
+                                    <div className="flex items-center gap-6">
+                                        <button className="p-3 hover:bg-gray-100 rounded-full">
+                                            <Download className="w-6 h-6 text-gray-400" />
                                         </button>
-                                        <button className="p-2 hover:bg-gray-100 rounded-full">
-                                            <Trash2 className="w-5 h-5 text-red-500" />
+                                        <button className="p-3 hover:bg-gray-100 rounded-full">
+                                            <Trash2 className="w-6 h-6 text-red-500" />
                                         </button>
                                     </div>
                                 </td>
@@ -90,6 +91,7 @@ export default function FileLibrary() {
                 </table>
             </div>
         </div>
+        </>
     );
 };
 

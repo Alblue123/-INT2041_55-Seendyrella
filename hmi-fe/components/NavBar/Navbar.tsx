@@ -21,13 +21,13 @@ export default function NavBar() {
                         <Link onClick={() => router.push("/library")}>Your library</Link>
                     </NavbarItem>
                     <NavbarItem className="lg:flex font-bold">
-                        <Link onClick={() => router.push("/auth/login")} className="hidden">Login</Link>
+                        <Link onClick={() => router.push("/auth/login")} >Login</Link>
                     </NavbarItem>
                     <NavbarItem className="lg:flex font-bold">
                         {/* <Button as={Link} color="primary" onClick={() => router.push("/auth/register")} variant="flat">
                             Sign Up
                         </Button> */}
-                        <Link onClick={() => router.push("/auth/register")} className="hidden">Sign up</Link>
+                        <Link onClick={() => router.push("/auth/register")}>Sign up</Link>
 
                     </NavbarItem>
                 </NavbarContent>
