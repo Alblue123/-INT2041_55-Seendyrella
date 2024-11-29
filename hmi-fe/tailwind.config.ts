@@ -1,5 +1,6 @@
 import type { Config } from "tailwindcss";
 import { nextui } from "@nextui-org/theme";
+import { FontFamily } from "./components/reading/tools/Fontfamily";
 
 const config: Config = {
   content: [
@@ -30,6 +31,18 @@ const config: Config = {
         robotoflex: ["Roboto Flex", "sans - serif"],
         inter: ["Inter", "sans - serif"],
         itim: ["Itim", "cursive"],
+        georgia: ["Georgia", "serif"], 
+        verdana: ["Verdana", "sans-serif"],
+      }, 
+      typography: {
+        DEFAULT: {
+          css: {
+            fontSize: 'inherit',
+            lineHeight: 'inherit',
+            fontFamily: 'inherit',
+            maxWidth: 'none', 
+          },
+        },
       },
     },
     screens: {
@@ -60,6 +73,6 @@ const config: Config = {
     },
   },
   darkMode: "class",
-  plugins: [nextui()],
+  plugins: [require('@tailwindcss/typography'),nextui()],
 };
 export default config;

@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { writeFile, mkdir } from "fs/promises";
 import { join } from "path";
-import { tmpdir } from "os"; 
+import { tmpdir } from "os";
 
 export async function POST(req: NextRequest) {
   const data = await req.formData();
@@ -9,11 +9,6 @@ export async function POST(req: NextRequest) {
 
   if (!file) {
     return NextResponse.json({ message: "No file uploaded" }, { status: 400 });
-  }
-
-  // Check if the file size exceeds the limit (10 MB)
-  if (file.size > 10 * 1024 * 1024) {
-    return NextResponse.json({ message: "File too large" }, { status: 400 });
   }
 
   const bytes = await file.arrayBuffer();
@@ -29,10 +24,11 @@ export async function POST(req: NextRequest) {
 
     // Save the file to the directory
     await writeFile(filePath, buffer);
-    console.log("File saved to", filePath);
 
+    console.log("File saved to", filePath);
+  
     return NextResponse.json(
-      { message: "File uploaded successfully" },
+      { message: "File uploaded successfully", fileName: file.name },
       { status: 201 }
     );
   } catch (error) {
