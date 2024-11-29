@@ -16,6 +16,10 @@ interface FormattingContextType {
     setHighlightColor: (color: string) => void;
     isHighlighting: boolean;
     setIsHighlighting: (isHighlighting: boolean) => void;
+    lineHeight: number;
+    setLineHeight: (height: number) => void;
+    letterSpacing: number;
+    setLetterSpacing: (spacing: number) => void;
 }
 
 // Create the context
@@ -24,12 +28,14 @@ const FormattingContext = createContext<FormattingContextType | undefined>(undef
 // Provider component
 export const FormattingProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
     const [fontSize, setFontSize] = useState<string>("14");
-    const [fontFamily, setFontFamily] = useState<string>("Calibri (body)");
+    const [fontFamily, setFontFamily] = useState<string>("Arial");
     const [fontWeight, setFontWeight] = useState<'normal' | 'bold'>('normal');
     const [fontStyle, setFontStyle] = useState<'normal' | 'italic'>('normal');
     const [textDecoration, setTextDecoration] = useState<'none' | 'underline'>('none');
     const [highlightColor, setHighlightColor] = useState<string>("yellow");
     const [isHighlighting, setIsHighlighting] = useState<boolean>(false);
+    const [lineHeight, setLineHeight] = useState<number>(1.5);
+    const [letterSpacing, setLetterSpacing] = useState<number>(0);
 
     return (
         <FormattingContext.Provider
@@ -47,7 +53,11 @@ export const FormattingProvider: React.FC<{ children: ReactNode }> = ({ children
                 highlightColor,
                 setHighlightColor,
                 isHighlighting,
-                setIsHighlighting
+                setIsHighlighting,
+                lineHeight,
+                setLineHeight,
+                letterSpacing,
+                setLetterSpacing
             }}
         >
             {children}

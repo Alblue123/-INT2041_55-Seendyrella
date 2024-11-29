@@ -12,6 +12,7 @@ export const FontSize: React.FC = () => {
 
     const handleFontSizeChange = (keys: any) => {
         const selectedSize = Array.from(keys)[0] as string;
+        // Always update, even if the same size is selected
         setFontSize(selectedSize);
     };
 
@@ -22,12 +23,13 @@ export const FontSize: React.FC = () => {
                     variant="light"
                     className="min-w-[60px]"
                 >
-                    {fontSize}
+                    {fontSize || fontSizes[0]}
                     <ChevronDown className="h-3 w-3" />
                 </Button>
             </DropdownTrigger>
             <DropdownMenu
                 aria-label="Font sizes"
+                disallowEmptySelection
                 selectionMode="single"
                 selectedKeys={new Set([fontSize])}
                 onSelectionChange={handleFontSizeChange}
