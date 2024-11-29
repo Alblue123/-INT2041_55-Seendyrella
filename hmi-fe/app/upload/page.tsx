@@ -1,6 +1,7 @@
 "use client";
 import { useState } from "react";
 import React from "react";
+import { useRouter } from "next/navigation"; 
 import "@/app/globals.css";
 
 export default function BookUpLoadingPage() {
@@ -8,6 +9,7 @@ export default function BookUpLoadingPage() {
     const [error, setError] = useState<string | null>(null); // Lưu thông báo lỗi
     const [dragging, setDragging] = useState(false); // Trạng thái kéo thả
     const [responseMessage, setResponseMessage] = useState<string | null>(null); // Lưu thông báo phản hồi từ server
+    const router = useRouter(); // Router instance
 
     const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const files = event.target.files;
@@ -72,6 +74,11 @@ export default function BookUpLoadingPage() {
 
             setFile(null);
             alert(`File "${file.name}" uploaded successfully`);
+
+            if (result.fileName) {
+                router.push(`/reading?fileName=${encodeURIComponent(result.fileName)}`);
+            }
+
         } catch (err) {
             console.error("Upload failed:", err);
             setResponseMessage("Upload failed. Please try again.");
