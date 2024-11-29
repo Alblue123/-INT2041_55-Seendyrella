@@ -12,10 +12,6 @@ interface FormattingContextType {
     setFontStyle: (style: 'normal' | 'italic') => void;
     textDecoration: 'none' | 'underline';
     setTextDecoration: (decoration: 'none' | 'underline') => void;
-    highlightColor: string;
-    setHighlightColor: (color: string) => void;
-    isHighlighting: boolean;
-    setIsHighlighting: (isHighlighting: boolean) => void;
     lineHeight: number;
     setLineHeight: (height: number) => void;
     letterSpacing: number;
@@ -32,8 +28,6 @@ export const FormattingProvider: React.FC<{ children: ReactNode }> = ({ children
     const [fontWeight, setFontWeight] = useState<'normal' | 'bold'>('normal');
     const [fontStyle, setFontStyle] = useState<'normal' | 'italic'>('normal');
     const [textDecoration, setTextDecoration] = useState<'none' | 'underline'>('none');
-    const [highlightColor, setHighlightColor] = useState<string>("yellow");
-    const [isHighlighting, setIsHighlighting] = useState<boolean>(false);
     const [lineHeight, setLineHeight] = useState<number>(1.5);
     const [letterSpacing, setLetterSpacing] = useState<number>(0);
 
@@ -50,10 +44,6 @@ export const FormattingProvider: React.FC<{ children: ReactNode }> = ({ children
                 setFontStyle,
                 textDecoration,
                 setTextDecoration,
-                highlightColor,
-                setHighlightColor,
-                isHighlighting,
-                setIsHighlighting,
                 lineHeight,
                 setLineHeight,
                 letterSpacing,

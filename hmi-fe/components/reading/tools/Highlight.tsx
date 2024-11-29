@@ -6,12 +6,12 @@ import { Highlighter } from 'lucide-react';
 import { useFormatting } from '../formatting/UseFormatting';
 
 export const HighlightColor: React.FC = () => {
-    const {
-        isHighlighting,
-        highlightColor,
-        setHighlightColor,
-        setIsHighlighting
-    } = useFormatting();
+    // const {
+    //     isHighlighting,
+    //     highlightColor,
+    //     setHighlightColor,
+    //     setIsHighlighting
+    // } = useFormatting();
 
     const highlightColors = [
         { name: "Yellow", value: "#FFFF00" },
@@ -21,16 +21,16 @@ export const HighlightColor: React.FC = () => {
         { name: "Orange", value: "#FFA500" }
     ];
 
-    const handleHighlightColorChange = (color: string) => {
-        setHighlightColor(color);
-        setIsHighlighting(true);
-    };
+    // const handleHighlightColorChange = (color: string) => {
+    //     setHighlightColor(color);
+    //     setIsHighlighting(true);
+    // };
 
     return (
         <Popover placement="bottom">
             <PopoverTrigger>
                 <Button
-                    variant={isHighlighting ? "solid" : "light"}
+                    // variant={isHighlighting ? "solid" : "light"}
                     isIconOnly
                     className="min-w-[40px]"
                 >
@@ -47,18 +47,18 @@ export const HighlightColor: React.FC = () => {
                             className="w-6 h-6 rounded-full"
                             style={{
                                 backgroundColor: color.value,
-                                border: highlightColor === color.value
-                                    ? '2px solid black'
-                                    : '1px solid gray'
+                                // border: highlightColor === color.value
+                                //     ? '2px solid black'
+                                //     : '1px solid gray'
                             }}
-                            onClick={() => handleHighlightColorChange(color.value)}
+                            // onClick={() => handleHighlightColorChange(color.value)}
                         />
                     ))}
                     <button
                         className="w-6 h-6 rounded-full bg-white border-2 border-gray-300"
                         onClick={() => {
-                            setIsHighlighting(false);
-                            setHighlightColor("transparent");
+                            // setIsHighlighting(false);
+                            // setHighlightColor("transparent");
                         }}
                     >
                         ✕
