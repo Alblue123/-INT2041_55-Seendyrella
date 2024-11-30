@@ -10,6 +10,16 @@ export default function Page() {
     const searchParams = useSearchParams();
     const fileName = searchParams.get("fileName");
     const [content, setContent] = useState<string>("");
+    const [selectedText, setSelectedText] = useState<string>("");
+
+    const handleSelection = () => {
+        const selection = window.getSelection();
+        if (selection && selection.toString()) {
+            const text = selection.toString();
+            console.log("Selected text:", text);
+            setSelectedText(text);
+        }
+    };
 
     useEffect(() => {
         if (fileName) {
@@ -30,9 +40,10 @@ export default function Page() {
         <FormattingProvider>
             <TextFormattingToolbar />
             <DocumentLayout>
-                {/* Your document content */}
                 <div
                     className="prose"
+                    onMouseUp={handleSelection}
+                    onKeyUp={handleSelection}
                     dangerouslySetInnerHTML={{
                         __html: content,
                     }}
