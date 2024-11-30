@@ -21,6 +21,7 @@ export default function Page() {
         }
     };
 
+    
     useEffect(() => {
         if (fileName) {
             fetch(`/api/reading?fileName=${encodeURIComponent(fileName)}`)
