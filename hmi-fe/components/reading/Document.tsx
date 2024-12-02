@@ -22,6 +22,8 @@ const DocumentLayout: React.FC<DocumentLayoutProps> = ({ children }) => {
         letterSpacing,
         backgroundColor,
         readingRuler,
+        rulerHeight,
+        rulerColor,
         readingMask
     } = useFormatting();
 
@@ -44,19 +46,24 @@ const DocumentLayout: React.FC<DocumentLayoutProps> = ({ children }) => {
                 <div className="w-full h-full min-h-[calc(100vh-4rem)] bg-white rounded-lg shadow-sm mx-auto p-8 relative overflow-hidden">
                     {readingRuler && isHovered && (
                         <div
-                            className="absolute left-0 right-0 border-2 border-gray-500 pointer-events-none z-30"
+                            className="absolute left-0 right-0 pointer-events-none"
                             style={{
                                 top: `${mouseY}px`,
-                                height: '2px',
-                                transform: 'translateY(30px)' // Điều chỉnh vị trí ruler
+                                height: `${rulerHeight}rem`, // To hơn
+                                backgroundColor: rulerColor,
+                                opacity: 0.3, // Fade
+                                transform: 'translateY(px)',
+                                borderRadius: '4px', // Bo tròn góc
+                                boxShadow: '0 2px 4px rgba(0,0,0,0.1)' // Hiệu ứng nổi
                             }}
                         />
                     )}
 
+
                     {readingMask && contentRef.current && (
                         <div className=''>
                             <div
-                                className="absolute left-0 right-0 bg-black/50 pointer-events-none"
+                                className="absolute left-0 right-0 bg-black/60 pointer-events-none"
                                 style={{
                                     top: 0,
                                     height: `${mouseY}px`,
@@ -64,7 +71,7 @@ const DocumentLayout: React.FC<DocumentLayoutProps> = ({ children }) => {
                                 }}
                             />
                             <div
-                                className="absolute left-0 right-0 bg-black/50 pointer-events-none"
+                                className="absolute left-0 right-0 bg-black/60 pointer-events-none"
                                 style={{
                                     top: `calc(${mouseY}px + 110px)`,
                                     bottom: 0,
