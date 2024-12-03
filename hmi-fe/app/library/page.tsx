@@ -26,6 +26,7 @@ const files = [
 
 export default function FileLibrary() {
     const router = useRouter();
+    
     return (
         <>
             <div className="w-full h-screen flex flex-col items-center bg-gray-100 pt-12">
