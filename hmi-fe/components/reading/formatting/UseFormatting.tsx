@@ -16,6 +16,11 @@ interface FormattingContextType {
     setLineHeight: (height: number) => void;
     letterSpacing: number;
     setLetterSpacing: (spacing: number) => void;
+    handleSelection: () => void;
+    content: string;
+    setContent: (content: string) => void;
+    highlight: string;
+    setHighlight: (highlight: string) => void;
 }
 
 // Create the context
@@ -30,6 +35,22 @@ export const FormattingProvider: React.FC<{ children: ReactNode }> = ({ children
     const [textDecoration, setTextDecoration] = useState<'none' | 'underline'>('none');
     const [lineHeight, setLineHeight] = useState<number>(1.5);
     const [letterSpacing, setLetterSpacing] = useState<number>(0);
+    const [content, setContent] = useState<string>(""); 
+    const [highlight, setHighlight] = useState<string>("");
+
+    const handleSelection = () => {
+        const selection = window.getSelection();
+        if (selection && selection.toString()) {
+            const text = selection.toString();
+            const updatedContent = content.replace(
+                text,
+                `<span style="background-color:${highlight || 'yellow'}"
+                                font-ưeight:${fontWeight}
+                >${text}</span>`
+            );
+            setContent(updatedContent);
+        }
+    };
 
     return (
         <FormattingContext.Provider
@@ -47,7 +68,12 @@ export const FormattingProvider: React.FC<{ children: ReactNode }> = ({ children
                 lineHeight,
                 setLineHeight,
                 letterSpacing,
-                setLetterSpacing
+                setLetterSpacing,
+                content,
+                setContent,
+                handleSelection,
+                highlight,
+                setHighlight,
             }}
         >
             {children}

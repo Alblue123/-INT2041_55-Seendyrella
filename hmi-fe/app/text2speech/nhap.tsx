@@ -12,14 +12,15 @@ async function generateAndStreamAudio() {
             apiKey: secret_key,
         });
 
-        let input_text = "Yes, integrating React with Django Admin is viable, but the process can be complex depending on the level of integration you want. Here’s an overview of how you can approach it:?";
+        let input_text = "Yes, integrating React with Django Admin is viable";
         // const filePath = "D:\\Downloads\\Kì này\\HMI\\-INT2041_55-Seendyrella\\hmi-fe\\public\\audio\\hello-playht.mp3";
         const path = require("path");
         const filePath = path.join(__dirname, "audio.mp3");
         const fileStream = fs.createWriteStream(filePath);
 
         const stream = await PlayHT.stream(input_text, {
-            voiceEngine: "Play3.0-mini"
+            voiceEngine: "Play3.0-mini",
+            speed: 0.5
         });
 
         stream.pipe(fileStream);
