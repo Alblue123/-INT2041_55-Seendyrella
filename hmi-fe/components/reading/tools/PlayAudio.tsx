@@ -12,7 +12,6 @@ export const PlayAudio: React.FC = () => {
      <>
          <Button
            variant="light"
-           size="sm"
            isIconOnly className="min-w-[40px]">
 
             <HiMiniSpeakerWave />

@@ -8,6 +8,7 @@ import { LetterSpacing } from './tools/Letterspacing';
 import { LineSpacing } from './tools/Linespacing';
 import { FontWeight } from './tools/Fontweight';
 import {PlayAudio} from './tools/PlayAudio';
+import {Eraser} from './tools/Eraser';
 
 export default function TextFormattingToolbar() {
     return (
@@ -32,6 +33,9 @@ export default function TextFormattingToolbar() {
             
             {/* Play Audio */}
             <PlayAudio />
+
+            <Eraser /> 
+            
         </div>
     );
 };

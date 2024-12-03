@@ -6,8 +6,8 @@ interface FormattingContextType {
     setFontSize: (size: string) => void;
     fontFamily: string;
     setFontFamily: (family: string) => void;
-    fontWeight: 'normal' | 'bold';
-    setFontWeight: (weight: 'normal' | 'bold') => void;
+    fontWeight: string;
+    setFontWeight: (weight: string) => void;
     fontStyle: 'normal' | 'italic';
     setFontStyle: (style: 'normal' | 'italic') => void;
     textDecoration: 'none' | 'underline';
@@ -21,6 +21,8 @@ interface FormattingContextType {
     setContent: (content: string) => void;
     highlight: string;
     setHighlight: (highlight: string) => void;
+    removeHighlight: (element: HTMLElement) => void;
+
 }
 
 // Create the context
@@ -30,13 +32,21 @@ const FormattingContext = createContext<FormattingContextType | undefined>(undef
 export const FormattingProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
     const [fontSize, setFontSize] = useState<string>("14");
     const [fontFamily, setFontFamily] = useState<string>("Arial");
-    const [fontWeight, setFontWeight] = useState<'normal' | 'bold'>('normal');
+    const [fontWeight, setFontWeight] = useState<string>("");
     const [fontStyle, setFontStyle] = useState<'normal' | 'italic'>('normal');
     const [textDecoration, setTextDecoration] = useState<'none' | 'underline'>('none');
     const [lineHeight, setLineHeight] = useState<number>(1.5);
     const [letterSpacing, setLetterSpacing] = useState<number>(0);
     const [content, setContent] = useState<string>(""); 
     const [highlight, setHighlight] = useState<string>("");
+    
+    const removeHighlight = (element: HTMLElement) => {
+        if (element.hasAttribute('data-highlight')) {
+            element.removeAttribute('data-highlight');
+            element.style.backgroundColor = '';
+        }
+    };
+  
 
     const handleSelection = () => {
         const selection = window.getSelection();
@@ -74,6 +84,7 @@ export const FormattingProvider: React.FC<{ children: ReactNode }> = ({ children
                 handleSelection,
                 highlight,
                 setHighlight,
+                removeHighlight,
             }}
         >
             {children}

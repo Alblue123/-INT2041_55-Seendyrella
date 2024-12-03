@@ -32,11 +32,15 @@ export const HighlightColor: React.FC = () => {
                     {highlightColors.map((color) => (
                         <button
                             key={color.name}
-                            className="w-6 h-6 rounded-full"
+                            className="w-6 h-6 rounded-full hover:w-8 hover:h-8 active:w-6 active:h-6 transition-all duration-200"
                             style={{
                                 backgroundColor: color.value,
                             }}
-                            onClick={() => setHighlight(color.value)}
+                            
+                            onClick={() => {
+                                setHighlight(color.value),
+                                console.log(color.value)
+                            }}
                         />
                     ))}
                     {/* // x button to close the popover */}
