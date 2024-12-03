@@ -10,6 +10,7 @@ import { FontWeight } from './tools/Fontweight';
 import { ReadingMask } from './tools/ReadingMask';
 import { BackgroundColor } from './tools/BackgroundColor';
 import { ReadingRuler } from './tools/ReadingRuler';
+import SaveDocument from './tools/SaveDocument';
 
 export default function TextFormattingToolbar() {
     return (
@@ -40,6 +41,9 @@ export default function TextFormattingToolbar() {
 
             {/* Reading Mask */}
             <ReadingMask />
+            
+            {/* Saving Document */}
+            <SaveDocument />
         </div>
     );
 };
