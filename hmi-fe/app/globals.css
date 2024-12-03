@@ -3,5 +3,27 @@
 @tailwind utilities;
 
 .heading {
-    @apply text-2xl font-semibold text-blue-500 mb-6;
-  }
+  @apply text-2xl font-semibold text-blue-500 mb-6;
+}
+
+@font-face {
+  font-family: 'OpenDyslexic';
+  src: url('./fonts/OpenDyslexic-Bold.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'OpenDyslexic';
+  src: url('./fonts/OpenDyslexic-Bold.woff2') format('woff2');
+  font-weight: bold;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'OpenDyslexic';
+  src: url('./fonts/OpenDyslexic-Italic.woff2') format('woff2');
+  font-weight: normal;
+  font-style: italic;
+}
+
