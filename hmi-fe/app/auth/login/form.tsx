@@ -1,10 +1,27 @@
 "use client";
 
 import { Button, Card, CardBody, CardHeader, Input, Link } from "@nextui-org/react";
+import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
+import { FormEvent } from "react";
 
 export default function LoginForm() {
     const router = useRouter();
+    const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        const formData = new FormData(e.currentTarget);
+        const response = await signIn("credentials", {
+            email: formData.get("email") as string,
+            password: formData.get("password") as string,
+            redirect: false,
+        });
+
+        if (response?.error) {
+            console.error("Failed to sign in");
+        } else {
+            router.push("../upload");
+        }
+    };
     return (
         <div className="min-h-screen w-full flex">
             {/* Left side - Background Image */}
@@ -32,12 +49,13 @@ export default function LoginForm() {
                         </p>
                     </CardHeader>
                     <CardBody>
-                        <form className="space-y-4">
+                        <form onSubmit={handleSubmit} className="space-y-4">
                             <div className="space-y-2">
                                 <label className="desktop:text-base laptop:text-base text-sm font-medium text-gray-700">
                                     Email
                                 </label>
                                 <Input
+                                    name="email"
                                     type="email"
                                     placeholder="Enter your email"
                                     className="w-full"
@@ -48,6 +66,7 @@ export default function LoginForm() {
                                     Password
                                 </label>
                                 <Input
+                                    name="password"
                                     type="password"
                                     placeholder="Enter your password"
                                     className="w-full"

@@ -9,38 +9,50 @@ export const authOptions: NextAuthOptions = {
     session: {
         strategy: 'jwt',
     },
+    pages: {
+        signIn: './auth/login',
+    },
+    secret: process.env.SECRET,
     providers: [
         CredentialsProvider({
             name: "Credentials",
             credentials: {
-                email: { }, // You can define the input type for better UX
-                password: { },
+                email: {label: "Email", type: "email"}, 
+                password: { label: "Password", type: "password" },
             },
             async authorize(credentials) {
                 if (!credentials?.email || !credentials.password) {
-                    return null
+                    console.log("Missing email or password");
+                    return null;
                 }
-        
+            
                 const user = await db.users.findUnique({
-                    where: { email: credentials.email }
-                })
-        
+                    where: { email: credentials.email },
+                });
+
+                console.log("Searching for user with email:", credentials.email);
+                console.log("Query result:", user);
+            
                 if (!user) {
-                    return null
+                    console.log("User not found");
+                    return null;
                 }
-        
-                const isPasswordValid = await compare(credentials.password, user.password)
-        
+            
+                const isPasswordValid = await compare(credentials.password, user.password);
+            
                 if (!isPasswordValid) {
-                    return null
+                    console.log("Invalid password");
+                    return null;
                 }
-        
+            
+                console.log("User authenticated successfully");
                 return {
-                    id: String(user.id), // Ensure the id is returned as a string
+                    id: String(user.id), // Ensure the ID is a string
                     email: user.email,
-                    username: user.username
-                }
+                    username: user.username,
+                };
             }
+            
         })
     ]
 }

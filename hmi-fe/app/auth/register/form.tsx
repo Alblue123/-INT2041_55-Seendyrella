@@ -5,20 +5,30 @@ import { useRouter } from "next/navigation";
 import { FormEvent } from "react";
 
 export default function RegisterForm() {
+    const router = useRouter();
     const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         const formData = new FormData(e.currentTarget);
-        const response = fetch('/api/auth/register', {
+        const response = await fetch('/api/auth/register', {
             method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
             body: JSON.stringify({
                 username: formData.get("username"),
                 email: formData.get("email"),
                 password: formData.get("password"),
             }),
         });
-        console.log({ response });
+        
+        if (response.ok) {
+            console.log("User created successfully");
+            router.push("./login");
+        } else {
+            console.error("Failed to create user");
+        }
     };
-    const router = useRouter();
+   
     return (
         <div className="min-h-screen w-full flex">
             {/* Left side - Background Image */}
