@@ -35,6 +35,10 @@ interface FormattingContextType {
     setBackgroundColor: (color: string) => void;
     readingRuler: boolean;
     setReadingRuler: (enabled: boolean) => void;
+    rulerHeight: number;
+    setRulerHeight: (height: number) => void;
+    rulerColor: string;
+    setRulerColor: (color: string) => void;
     readingMask: boolean;
     setReadingMask: (enabled: boolean) => void;
 }
@@ -54,6 +58,8 @@ export const FormattingProvider: React.FC<{ children: ReactNode }> = ({ children
     const [letterSpacing, setLetterSpacing] = useState<number>(0);
     const [backgroundColor, setBackgroundColor] = useState<string>("#F4F4F5");
     const [readingRuler, setReadingRuler] = useState<boolean>(false);
+    const [rulerHeight, setRulerHeight] = useState<number>(2);
+    const [rulerColor, setRulerColor] = useState<string>('#6B7280');
     const [readingMask, setReadingMask] = useState<boolean>(false);
 
     return (
@@ -82,6 +88,10 @@ export const FormattingProvider: React.FC<{ children: ReactNode }> = ({ children
                 setBackgroundColor,
                 readingRuler,
                 setReadingRuler,
+                rulerHeight,
+                setRulerHeight,
+                rulerColor,
+                setRulerColor,
                 readingMask,
                 setReadingMask
             }}
