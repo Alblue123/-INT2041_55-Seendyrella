@@ -1,6 +1,6 @@
 "use client";
 
-import React from 'react';
+import React, {useState} from 'react';
 import { Popover, PopoverTrigger, PopoverContent, Button } from "@nextui-org/react";
 import { Highlighter } from 'lucide-react';
 import { useFormatting } from '@/components/reading/formatting/UseFormatting';
@@ -8,6 +8,8 @@ import { useFormatting } from '@/components/reading/formatting/UseFormatting';
 
 export const HighlightColor: React.FC = () => {
     const { setHighlight } = useFormatting();
+    const [highlighterColor, setHighlighterColor] = useState<string>('transparent');
+
     const highlightColors = [
         { name: "Yellow", value: "#FFFF00" },
         { name: "Green", value: "#90EE90" },
@@ -17,13 +19,15 @@ export const HighlightColor: React.FC = () => {
     ];
     return (
         <Popover placement="bottom">
-            <PopoverTrigger>
+            <PopoverTrigger
+             style={{ backgroundColor: highlighterColor }}>
                 <Button
                     isIconOnly
                     className="min-w-[40px]"
                 >
                     <Highlighter
                         className="h-4 w-4"
+                       
                     />
                 </Button>
             </PopoverTrigger>
@@ -38,8 +42,11 @@ export const HighlightColor: React.FC = () => {
                             }}
                             
                             onClick={() => {
+
                                 setHighlight(color.value),
                                 console.log(color.value)
+                                setHighlighterColor(color.value);
+
                             }}
                         />
                     ))}
@@ -47,6 +54,9 @@ export const HighlightColor: React.FC = () => {
                     <button
                         className="w-6 h-6 rounded-full bg-white border-2 border-gray-300"
                         onClick={() => {
+                            setHighlight('transparent');
+                            setHighlighterColor('transparent');
+
                         }}
                     >
                         ✕

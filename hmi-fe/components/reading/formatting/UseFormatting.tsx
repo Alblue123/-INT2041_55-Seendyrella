@@ -39,11 +39,14 @@ export const FormattingProvider: React.FC<{ children: ReactNode }> = ({ children
     const [letterSpacing, setLetterSpacing] = useState<number>(0);
     const [content, setContent] = useState<string>(""); 
     const [highlight, setHighlight] = useState<string>("");
-    
+    const [isHighlighted, setIsHighlighted] = useState<boolean>(false);
+
     const removeHighlight = (element: HTMLElement) => {
-        if (element.hasAttribute('data-highlight')) {
-            element.removeAttribute('data-highlight');
-            element.style.backgroundColor = '';
+        if (element.hasAttribute('highlight')) {
+            element.removeAttribute('highlight');
+            element.style.backgroundColor = 'transparent';
+            setIsHighlighted(false);
+            
         }
     };
   
@@ -54,11 +57,14 @@ export const FormattingProvider: React.FC<{ children: ReactNode }> = ({ children
             const text = selection.toString();
             const updatedContent = content.replace(
                 text,
-                `<span style="background-color:${highlight || 'yellow'}"
-                                font-ưeight:${fontWeight}
+                `<span 
+                    highlight="true" 
+                    style="background-color:${highlight|| 'transparent'};
+                    font-weight:${fontWeight}"
                 >${text}</span>`
             );
             setContent(updatedContent);
+            setIsHighlighted(true);
         }
     };
 
