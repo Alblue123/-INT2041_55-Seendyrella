@@ -5,12 +5,10 @@ import React, {
     ReactNode
 } from 'react';
 
-// Types for formatting options
 export type FontWeight = 'normal' | 'bold';
 export type FontStyle = 'normal' | 'italic';
 export type TextDecoration = 'none' | 'underline';
 
-// Define the shape of our formatting context
 interface FormattingContextType {
     // Text Formatting
     fontSize: number;
@@ -39,16 +37,17 @@ interface FormattingContextType {
     setRulerHeight: (height: number) => void;
     rulerColor: string;
     setRulerColor: (color: string) => void;
+    rulerPosition: number;
+    setRulerPosition: (position: number) => void;
+
+
     readingMask: boolean;
     setReadingMask: (enabled: boolean) => void;
 }
 
-// Create the context
 const FormattingContext = createContext<FormattingContextType | undefined>(undefined);
 
-// Provider component
 export const FormattingProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
-    // Default states
     const [fontSize, setFontSize] = useState<number>(16);
     const [fontFamily, setFontFamily] = useState<string>("Inter");
     const [fontWeight, setFontWeight] = useState<FontWeight>('normal');
@@ -60,12 +59,12 @@ export const FormattingProvider: React.FC<{ children: ReactNode }> = ({ children
     const [readingRuler, setReadingRuler] = useState<boolean>(false);
     const [rulerHeight, setRulerHeight] = useState<number>(2);
     const [rulerColor, setRulerColor] = useState<string>('#6B7280');
+    const [rulerPosition, setRulerPosition] = useState<number>(50);
     const [readingMask, setReadingMask] = useState<boolean>(false);
 
     return (
         <FormattingContext.Provider
             value={{
-                // Text Formatting
                 fontSize,
                 setFontSize,
                 fontFamily,
@@ -76,14 +75,10 @@ export const FormattingProvider: React.FC<{ children: ReactNode }> = ({ children
                 setFontStyle,
                 textDecoration,
                 setTextDecoration,
-
-                // Line and Letter Spacing
                 lineHeight,
                 setLineHeight,
                 letterSpacing,
                 setLetterSpacing,
-
-                // Background and Reading Aids
                 backgroundColor,
                 setBackgroundColor,
                 readingRuler,
@@ -93,7 +88,9 @@ export const FormattingProvider: React.FC<{ children: ReactNode }> = ({ children
                 rulerColor,
                 setRulerColor,
                 readingMask,
-                setReadingMask
+                setReadingMask,
+                rulerPosition,
+                setRulerPosition
             }}
         >
             {children}
@@ -101,7 +98,6 @@ export const FormattingProvider: React.FC<{ children: ReactNode }> = ({ children
     );
 };
 
-// Custom hook to use the formatting context
 export const useFormatting = () => {
     const context = useContext(FormattingContext);
     if (context === undefined) {
