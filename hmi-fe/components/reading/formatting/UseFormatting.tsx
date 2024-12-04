@@ -21,7 +21,7 @@ interface FormattingContextType {
     setContent: (content: string) => void;
     highlight: string;
     setHighlight: (highlight: string) => void;
-    removeHighlight: (element: HTMLElement) => void;
+    // removeHighlight: (element: HTMLElement) => void;
 
 }
 
@@ -39,16 +39,6 @@ export const FormattingProvider: React.FC<{ children: ReactNode }> = ({ children
     const [letterSpacing, setLetterSpacing] = useState<number>(0);
     const [content, setContent] = useState<string>(""); 
     const [highlight, setHighlight] = useState<string>("");
-    const [isHighlighted, setIsHighlighted] = useState<boolean>(false);
-
-    const removeHighlight = (element: HTMLElement) => {
-        if (element.hasAttribute('highlight')) {
-            element.removeAttribute('highlight');
-            element.style.backgroundColor = 'transparent';
-            setIsHighlighted(false);
-            
-        }
-    };
   
 
     const handleSelection = () => {
@@ -64,7 +54,6 @@ export const FormattingProvider: React.FC<{ children: ReactNode }> = ({ children
                 >${text}</span>`
             );
             setContent(updatedContent);
-            setIsHighlighted(true);
         }
     };
 
@@ -90,7 +79,7 @@ export const FormattingProvider: React.FC<{ children: ReactNode }> = ({ children
                 handleSelection,
                 highlight,
                 setHighlight,
-                removeHighlight,
+                // removeHighlight,
             }}
         >
             {children}

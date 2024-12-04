@@ -6,7 +6,7 @@ import { Eraser as EraserIcon } from "lucide-react";
 import { useFormatting } from '../formatting/UseFormatting';
 
 export const Eraser: React.FC = () => {
-    const { setHighlight, removeHighlight } = useFormatting();
+    const { setHighlight, content, setContent} = useFormatting();
     const [isErasing, setIsErasing] = useState(false);
 
     useEffect(() => {
@@ -16,28 +16,32 @@ export const Eraser: React.FC = () => {
                 const highlightedElement = target.closest('span[highlight="true"]') as HTMLElement;
                 
                 if (highlightedElement) {
-                    // Store the text content
-                    const originalText = highlightedElement.textContent;
-                    
-                    // Remove the highlight span and replace with original text
-                    if (originalText && highlightedElement.parentNode) {
-                        // Create text node with original content
+                    const originalText = highlightedElement.textContent || '';
+
+                    if (highlightedElement.parentNode) {
+                        // Remove from DOM
                         const textNode = document.createTextNode(originalText);
-                        // Replace highlighted element with text node
                         highlightedElement.parentNode.replaceChild(textNode, highlightedElement);
+                        
+                        // Remove all matching highlights from content
+                        const sanitizedContent = content.replace(
+                            new RegExp(`<span[^>]*highlight="true"[^>]*>${originalText}</span>`, 'g'),
+                            originalText
+                        );
+                        
+                        // Store clean state
+                        setContent(sanitizedContent);
+
+                        // Reset highlight state
+                        setHighlight(null);
                     }
                 }
             }
         };
-    
-        if (isErasing) {
-            document.addEventListener('click', handleClick);
-        }
-    
-        return () => {
-            document.removeEventListener('click', handleClick);
-        };
-    }, [isErasing]);
+
+        document.addEventListener('click', handleClick);
+        return () => document.removeEventListener('click', handleClick);
+    }, [isErasing, content, setContent, setHighlight]);
 
     const handleErase = () => {
         setIsErasing(isErasing===false);
