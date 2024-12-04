@@ -12,7 +12,12 @@ import { BackgroundColor } from './tools/BackgroundColor';
 import { ReadingRuler } from './tools/ReadingRuler';
 import SaveDocument from './tools/SaveDocument';
 
-export default function TextFormattingToolbar() {
+interface TextFormattingToolbarProps {
+    isLoggedIn: boolean;
+}
+
+
+export default function TextFormattingToolbar({ isLoggedIn }: TextFormattingToolbarProps) {
     return (
         <div className="flex justify-center items-center gap-2 p-2 border rounded-lg bg-white shadow-sm sticky">
             {/* Font Weight */}
@@ -41,9 +46,13 @@ export default function TextFormattingToolbar() {
 
             {/* Reading Mask */}
             <ReadingMask />
-            
-            {/* Saving Document */}
-            <SaveDocument />
+
+             {/* Saving Document */}
+            {isLoggedIn && (
+                <>
+                    <SaveDocument />
+                </>
+            )}
         </div>
     );
 };

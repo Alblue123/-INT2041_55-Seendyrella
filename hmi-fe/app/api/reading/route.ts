@@ -3,6 +3,7 @@ import fs from "fs";
 import { join } from "path";
 import { tmpdir } from "os";
 import mammoth from "mammoth";
+import { db } from "@/lib/prisma"
 
 export async function GET(req: Request) {
     const { searchParams } = new URL(req.url);
@@ -45,4 +46,30 @@ export async function GET(req: Request) {
         console.error("Error reading file:", error);
         return NextResponse.json({ error: "Failed to process the file" }, { status: 500 });
     }
+}
+
+/*export async function POST(req: Request) {
+    try {
+        const body = await req.json();
+        const {username, filename, content } = body;
+    }
+}*/
+
+async function saveDocumentToDatabase(username: string, bookName: string, content: string) {
+    const existedUserName = await db.users.findUnique({
+        where: {
+            username: username
+        }
+    });
+    if (!existedUserName) {
+        return NextResponse.json({ message: "This user haven't linked to our database" }, { status: 409 });
+    }
+
+    const newDocument = await db.users_documents.create({
+        data: {
+            username: username,
+            document_name: bookName,
+            content: content
+        }
+    })
 }

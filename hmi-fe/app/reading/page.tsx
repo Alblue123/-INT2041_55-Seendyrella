@@ -6,11 +6,33 @@ import DocumentLayout from '@/components/reading/Document';
 import { useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
 
+
 export default function Page() {
     const searchParams = useSearchParams();
     const fileName = searchParams.get("fileName");
     const [content, setContent] = useState<string>("");
     const [selectedText, setSelectedText] = useState<string>("");
+
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+    useEffect(() => {
+        const validateToken = async () => {
+            try {
+                const req = await fetch("api/auth/token", {
+                    method: "GET"
+                });
+
+                if (req.ok) {
+                    console.log("Token is valid");
+                    setIsLoggedIn(true);
+                }
+            } catch (error) {
+                console.error("Failed to validate token:", error);
+            }
+        };
+
+        validateToken();
+    }, []);
 
     const handleSelection = () => {
         const selection = window.getSelection();
@@ -39,7 +61,7 @@ export default function Page() {
 
     return (
         <FormattingProvider>
-            <TextFormattingToolbar />
+            <TextFormattingToolbar isLoggedIn={isLoggedIn}/>
             <DocumentLayout>
                 <div
                     className="prose"
