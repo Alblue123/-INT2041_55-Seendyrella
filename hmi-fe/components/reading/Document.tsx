@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import { useFormatting } from './formatting/UseFormatting';
 
 interface DocumentLayoutProps {
@@ -9,6 +9,7 @@ interface DocumentLayoutProps {
 
 const DocumentLayout: React.FC<DocumentLayoutProps> = ({ children }) => {
     const contentRef = useRef<HTMLDivElement>(null);
+    const [mouseY, setMouseY] = useState(0);
 
     const {
         fontSize,
@@ -22,17 +23,26 @@ const DocumentLayout: React.FC<DocumentLayoutProps> = ({ children }) => {
         readingRuler,
         rulerHeight,
         rulerColor,
-        rulerPosition
+        rulerPosition,
+        readingMask
     } = useFormatting();
+
+    const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+        if (contentRef.current) {
+            const rect = contentRef.current.getBoundingClientRect();
+            setMouseY(e.clientY - rect.top);
+        }
+    };
 
     return (
         <div
             className="min-h-screen"
             style={{ backgroundColor }}
+            onMouseMove={handleMouseMove}
         >
             <div className="max-w-7xl mx-auto px-4 py-8 h-full min-h-screen">
                 <div className="w-full h-full min-h-[calc(100vh-4rem)] bg-white rounded-lg shadow-sm mx-auto p-8 relative overflow-hidden">
-                    {readingRuler && contentRef.current && (
+                    {readingRuler && (
                         <div
                             className="absolute left-0 right-0 pointer-events-none z-50"
                             style={{
@@ -45,6 +55,27 @@ const DocumentLayout: React.FC<DocumentLayoutProps> = ({ children }) => {
                                 boxShadow: '0 2px 4px rgba(0,0,0,0.1)'
                             }}
                         />
+                    )}
+
+                    {readingMask && contentRef.current && (
+                        <div>
+                            <div
+                                className="absolute left-0 right-0 bg-black/60 pointer-events-none z-50"
+                                style={{
+                                    top: 0,
+                                    height: `${mouseY}px`,
+                                    width: '100%'
+                                }}
+                            />
+                            <div
+                                className="absolute left-0 right-0 bg-black/60 pointer-events-none z-50"
+                                style={{
+                                    top: `calc(${mouseY}px + 120px)`,
+                                    bottom: 0,
+                                    width: '100%'
+                                }}
+                            />
+                        </div>
                     )}
 
                     <div
