@@ -5,7 +5,7 @@ import fs from 'fs';
 export const generateAndStreamAudio = async (input_text: string) => {
     try {
         const user_id = '31Ivv5ymNXOEmPxBSBzonXQr5PF2';
-    const secret_key = '761a57aab3c84b1f96d30125f2fdec86';
+        const secret_key = '761a57aab3c84b1f96d30125f2fdec86';
 
         
         PlayHT.init({

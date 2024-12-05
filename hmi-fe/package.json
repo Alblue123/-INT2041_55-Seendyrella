@@ -23,6 +23,8 @@
     "mammoth": "^1.8.0",
     "next": "^15.0.3",
     "next-auth": "^4.24.10",
+    "node-fetch": "^3.3.2",
+    "node-polyfill-webpack-plugin": "^4.1.0",
     "play-sound": "^1.1.6",
     "playht": "^0.14.0",
     "react": "^18",
