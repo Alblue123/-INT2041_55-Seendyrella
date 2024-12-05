@@ -14,7 +14,7 @@ import Cookies from "js-cookie";
 export default function Page() {
     const searchParams = useSearchParams();
     const fileName = searchParams.get("fileName");
-    const documentName = searchParams.get("documenName");
+    const documentName = searchParams.get("document_name");
 
     return (
         <FormattingProvider>
