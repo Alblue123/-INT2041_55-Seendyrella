@@ -3,10 +3,10 @@
 import React from 'react';
 import {
     Switch,
-    Tooltip,
     Popover,
     PopoverTrigger,
-    PopoverContent
+    PopoverContent,
+    Slider
 } from "@nextui-org/react";
 import { useFormatting } from '../formatting/UseFormatting';
 import { RulerIcon, Settings } from 'lucide-react';
@@ -18,7 +18,9 @@ export const ReadingRuler: React.FC = () => {
         rulerHeight,
         setRulerHeight,
         rulerColor,
-        setRulerColor
+        setRulerColor,
+        rulerPosition,
+        setRulerPosition
     } = useFormatting();
 
     return (
@@ -37,32 +39,41 @@ export const ReadingRuler: React.FC = () => {
             </PopoverTrigger>
             {readingRuler && (
                 <PopoverContent>
-                    <div className="pr-4 py-3 space-y-3 w-64">
-                        <div className="flex items-center justify-between">
-                            <label className="text-sm">Chiều cao:</label>
-                            <div className="flex items-center space-x-2">
-                                <input
-                                    type="range"
-                                    min="1"
-                                    max="10"
-                                    value={rulerHeight}
-                                    onChange={(e) => setRulerHeight(Number(e.target.value))}
-                                    className="w-24"
-                                />
-                                <span className="text-sm w-8 text-right">{rulerHeight}rem</span>
-                            </div>
+                    <div className="p-4 space-y-4 w-64">
+                        <div className="flex flex-col space-y-2">
+                            <label className="text-sm">Ruler Height</label>
+                            <Slider
+                                size="sm"
+                                step={0.5}
+                                minValue={1}
+                                maxValue={10}
+                                value={rulerHeight}
+                                onChange={(value) => setRulerHeight(value as number)}
+                                label={`${rulerHeight} rem`}
+                            />
                         </div>
 
-                        <div className="flex items-center justify-between">
-                            <label className="text-sm">Màu:</label>
-                            <div className="flex items-center space-x-2">
-                                <input
-                                    type="color"
-                                    value={rulerColor}
-                                    onChange={(e) => setRulerColor(e.target.value)}
-                                    className="w-8 h-8 p-0 border-none"
-                                />
-                            </div>
+                        <div className="flex flex-col space-y-2">
+                            <label className="text-sm">Ruler Position</label>
+                            <Slider
+                                size="sm"
+                                step={1}
+                                minValue={0}
+                                maxValue={100}
+                                value={rulerPosition}
+                                onChange={(value) => setRulerPosition(value as number)}
+                                label={`${rulerPosition}%`}
+                            />
+                        </div>
+
+                        <div className="flex flex-col space-y-2">
+                            <label className="text-sm">Ruler Color</label>
+                            <input
+                                type="color"
+                                value={rulerColor}
+                                onChange={(e) => setRulerColor(e.target.value)}
+                                className="w-full h-10 p-0 border-none"
+                            />
                         </div>
                     </div>
                 </PopoverContent>

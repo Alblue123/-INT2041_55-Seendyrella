@@ -1,23 +1,42 @@
 "use client";
-
+import { useFormatting } from '@/components/reading/formatting/UseFormatting';
 import { FormattingProvider } from '@/components/reading/formatting/UseFormatting';
 import TextFormattingToolbar from '@/components/reading/ReadingTools';
 import DocumentLayout from '@/components/reading/Document';
 import { useEffect, useState } from "react";
-import Cookies from "js-cookie";
 import { useSearchParams } from "next/navigation";
-import { line } from 'framer-motion/client';
-import { LetterSpacing } from '@/components/reading/tools/Letterspacing';
+import "./page_css.css"
+
+import Cookies from "js-cookie";
+
+
 
 export default function Page() {
     const searchParams = useSearchParams();
     const fileName = searchParams.get("fileName");
+    const documentName = searchParams.get("documenName");
+
+    return (
+        <FormattingProvider>
+<PageContent fileName={fileName} documentName={documentName} />       
+            </FormattingProvider>
+    );
+}
+
+interface PageContentProps {
+    fileName: string | null;
+    documentName: string | null;
+}
+
+function PageContent({ fileName, documentName }: PageContentProps) {
+    // const fileName = searchParams.get("fileName");
     const [filename, setFilename] = useState<string>("");
-    const [content, setContent] = useState<string>("");
+    // const [content, setContent] = useState<string>("");
     const [selectedText, setSelectedText] = useState<string>("");
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [username, setUsername] = useState<string>("");
-    const documentName = searchParams.get("document_name");
+    // const documentName = searchParams.get("document_name");
+    const { handleSelection, content, setContent } = useFormatting();
 
     useEffect(() => {
         const validateToken = async () => {
@@ -51,22 +70,11 @@ export default function Page() {
         validateToken();
     }, []);
 
-    const handleSelection = () => {
-        const selection = window.getSelection();
-        if (selection && selection.toString()) {
-            const text = selection.toString();
-            console.log("Selected text:", text);
-            setSelectedText(text);
-        }
-    };
-
-    
     useEffect(() => {
         if (fileName) {
             fetch(`/api/reading?fileName=${encodeURIComponent(fileName)}`)
                 .then((res) => {
                     if (!res.ok) throw new Error("Failed to load file");
-                    setFilename(fileName);  // Ensure filename is set here
                     return res.text();
                 })
                 .then((data) => setContent(data))
@@ -75,8 +83,7 @@ export default function Page() {
                     alert("Failed to load the file content");
                 });
         }
-    }, [fileName]);
-    
+    }, [fileName, setContent]);
 
     useEffect(() => {
         if (documentName) {
@@ -168,18 +175,21 @@ export default function Page() {
     };
 
     return (
-        <FormattingProvider>
-            <TextFormattingToolbar isLoggedIn={isLoggedIn} onSave={handleSave}/>
+        <>
+            <TextFormattingToolbar isLoggedIn={isLoggedIn} onSave={handleSave} />
             <DocumentLayout>
                 <div
                     className="prose"
+                    contentEditable
+                    suppressContentEditableWarning
                     onMouseUp={handleSelection}
                     onKeyUp={handleSelection}
+                    onInput={(e) => setContent(e.currentTarget.innerHTML)}
                     dangerouslySetInnerHTML={{
                         __html: content,
                     }}
                 />
             </DocumentLayout>
-        </FormattingProvider>
+        </>
     );
 }

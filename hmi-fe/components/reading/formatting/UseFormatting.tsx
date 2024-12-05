@@ -1,7 +1,6 @@
 import React, { createContext, useState, useContext, useEffect, ReactNode } from 'react';
 import Cookies from 'js-cookie';
 
-// Types for formatting options
 export type FontWeight = 'normal' | 'bold';
 export type FontStyle = 'normal' | 'italic';
 export type TextDecoration = 'none' | 'underline';
@@ -21,6 +20,15 @@ interface FormattingContextType {
     setLineHeight: (height: number) => void;
     letterSpacing: number;
     setLetterSpacing: (spacing: number) => void;
+    handleSelection: () => void;
+    content: string;
+    setContent: (content: string) => void;
+    highlight: string;
+    setHighlight: (highlight: string) => void;
+    // removeHighlight: (element: HTMLElement) => void;
+
+
+    // Background and Reading Aids
     backgroundColor: string;
     setBackgroundColor: (color: string) => void;
     readingRuler: boolean;
@@ -29,6 +37,10 @@ interface FormattingContextType {
     setRulerHeight: (height: number) => void;
     rulerColor: string;
     setRulerColor: (color: string) => void;
+    rulerPosition: number;
+    setRulerPosition: (position: number) => void;
+
+
     readingMask: boolean;
     setReadingMask: (enabled: boolean) => void;
 }
@@ -48,7 +60,27 @@ export const FormattingProvider: React.FC<{ children: ReactNode }> = ({ children
     const [readingRuler, setReadingRuler] = useState<boolean>(false);
     const [rulerHeight, setRulerHeight] = useState<number>(2);
     const [rulerColor, setRulerColor] = useState<string>('#6B7280');
+    const [rulerPosition, setRulerPosition] = useState<number>(50);
     const [readingMask, setReadingMask] = useState<boolean>(false);
+    const [content, setContent] = useState<string>(""); 
+    const [highlight, setHighlight] = useState<string>("");
+  
+
+    const handleSelection = () => {
+        const selection = window.getSelection();
+        if (selection && selection.toString()) {
+            const text = selection.toString();
+            const updatedContent = content.replace(
+                text,
+                `<span 
+                    highlight="true" 
+                    style="background-color:${highlight|| 'transparent'};
+                    font-weight:${fontWeight}"
+                >${text}</span>`
+            );
+            setContent(updatedContent);
+        }
+    };
 
     // This state ensures cookies are loaded after the first render
     const [cookiesLoaded, setCookiesLoaded] = useState<boolean>(false);
@@ -125,7 +157,6 @@ export const FormattingProvider: React.FC<{ children: ReactNode }> = ({ children
     return (
         <FormattingContext.Provider
             value={{
-                // Text Formatting
                 fontSize,
                 setFontSize,
                 fontFamily,
@@ -136,14 +167,15 @@ export const FormattingProvider: React.FC<{ children: ReactNode }> = ({ children
                 setFontStyle,
                 textDecoration,
                 setTextDecoration,
-
-                // Line and Letter Spacing
                 lineHeight,
                 setLineHeight,
                 letterSpacing,
                 setLetterSpacing,
-
-                // Background and Reading Aids
+                content,
+                setContent,
+                handleSelection,
+                highlight,
+                setHighlight,
                 backgroundColor,
                 setBackgroundColor,
                 readingRuler,
@@ -153,7 +185,9 @@ export const FormattingProvider: React.FC<{ children: ReactNode }> = ({ children
                 rulerColor,
                 setRulerColor,
                 readingMask,
-                setReadingMask
+                setReadingMask,
+                rulerPosition,
+                setRulerPosition,
             }}
         >
             {children}
@@ -161,7 +195,6 @@ export const FormattingProvider: React.FC<{ children: ReactNode }> = ({ children
     );
 };
 
-// Custom hook to use the formatting context
 export const useFormatting = () => {
     const context = useContext(FormattingContext);
     if (context === undefined) {
