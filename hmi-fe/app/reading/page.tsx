@@ -1,26 +1,29 @@
 "use client";
-
+import { useFormatting } from '@/components/reading/formatting/UseFormatting';
 import { FormattingProvider } from '@/components/reading/formatting/UseFormatting';
 import TextFormattingToolbar from '@/components/reading/ReadingTools';
 import DocumentLayout from '@/components/reading/Document';
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useSearchParams } from "next/navigation";
+import "./page_css.css"
 
 export default function Page() {
     const searchParams = useSearchParams();
     const fileName = searchParams.get("fileName");
-    const [content, setContent] = useState<string>("");
-    const [selectedText, setSelectedText] = useState<string>("");
 
-    const handleSelection = () => {
-        const selection = window.getSelection();
-        if (selection && selection.toString()) {
-            const text = selection.toString();
-            console.log("Selected text:", text);
-            setSelectedText(text);
-        }
-    };
+    return (
+        <FormattingProvider>
+            <PageContent fileName={fileName} />
+        </FormattingProvider>
+    );
+}
 
+interface PageContentProps {
+    fileName: string | null;
+}
+
+function PageContent({ fileName }: PageContentProps) {
+    const { handleSelection, content, setContent } = useFormatting();
     
     useEffect(() => {
         if (fileName) {
@@ -35,21 +38,24 @@ export default function Page() {
                     alert("Failed to load the file content");
                 });
         }
-    }, [fileName]);
+    }, [fileName, setContent]);
 
     return (
-        <FormattingProvider>
+        <>
             <TextFormattingToolbar />
             <DocumentLayout>
                 <div
                     className="prose"
+                    contentEditable
+                    suppressContentEditableWarning
                     onMouseUp={handleSelection}
                     onKeyUp={handleSelection}
+                    onInput={(e) => setContent(e.currentTarget.innerHTML)}
                     dangerouslySetInnerHTML={{
                         __html: content,
                     }}
                 />
             </DocumentLayout>
-        </FormattingProvider>
+        </>
     );
 }

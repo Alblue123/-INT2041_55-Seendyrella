@@ -27,6 +27,13 @@ interface FormattingContextType {
     setLineHeight: (height: number) => void;
     letterSpacing: number;
     setLetterSpacing: (spacing: number) => void;
+    handleSelection: () => void;
+    content: string;
+    setContent: (content: string) => void;
+    highlight: string;
+    setHighlight: (highlight: string) => void;
+    // removeHighlight: (element: HTMLElement) => void;
+
 
     // Background and Reading Aids
     backgroundColor: string;
@@ -61,6 +68,25 @@ export const FormattingProvider: React.FC<{ children: ReactNode }> = ({ children
     const [rulerColor, setRulerColor] = useState<string>('#6B7280');
     const [rulerPosition, setRulerPosition] = useState<number>(50);
     const [readingMask, setReadingMask] = useState<boolean>(false);
+    const [content, setContent] = useState<string>(""); 
+    const [highlight, setHighlight] = useState<string>("");
+  
+
+    const handleSelection = () => {
+        const selection = window.getSelection();
+        if (selection && selection.toString()) {
+            const text = selection.toString();
+            const updatedContent = content.replace(
+                text,
+                `<span 
+                    highlight="true" 
+                    style="background-color:${highlight|| 'transparent'};
+                    font-weight:${fontWeight}"
+                >${text}</span>`
+            );
+            setContent(updatedContent);
+        }
+    };
 
     return (
         <FormattingContext.Provider
@@ -79,6 +105,12 @@ export const FormattingProvider: React.FC<{ children: ReactNode }> = ({ children
                 setLineHeight,
                 letterSpacing,
                 setLetterSpacing,
+                content,
+                setContent,
+                handleSelection,
+                highlight,
+                setHighlight,
+                setLetterSpacing,
                 backgroundColor,
                 setBackgroundColor,
                 readingRuler,
@@ -90,7 +122,8 @@ export const FormattingProvider: React.FC<{ children: ReactNode }> = ({ children
                 readingMask,
                 setReadingMask,
                 rulerPosition,
-                setRulerPosition
+                setRulerPosition,
+                setLetterSpacing
             }}
         >
             {children}

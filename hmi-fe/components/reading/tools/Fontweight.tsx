@@ -35,7 +35,7 @@ export const FontWeight: React.FC = () => {
                 variant={fontWeight === 'bold' ? "solid" : "light"}
                 isIconOnly
                 className="min-w-[40px]"
-                onClick={() => toggleFormatting('bold')}
+                onClick={() => setFontWeight('bold')}
             >
                 <FaBold />
             </Button>

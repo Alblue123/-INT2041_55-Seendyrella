@@ -1,17 +1,14 @@
 "use client";
 
-import React from 'react';
+import React, {useState} from 'react';
 import { Popover, PopoverTrigger, PopoverContent, Button } from "@nextui-org/react";
 import { Highlighter } from 'lucide-react';
-import { useFormatting } from '../formatting/UseFormatting';
+import { useFormatting } from '@/components/reading/formatting/UseFormatting';
+
 
 export const HighlightColor: React.FC = () => {
-    // const {
-    //     isHighlighting,
-    //     highlightColor,
-    //     setHighlightColor,
-    //     setIsHighlighting
-    // } = useFormatting();
+    const { setHighlight } = useFormatting();
+    const [highlighterColor, setHighlighterColor] = useState<string>('transparent');
 
     const highlightColors = [
         { name: "Yellow", value: "#FFFF00" },
@@ -20,22 +17,17 @@ export const HighlightColor: React.FC = () => {
         { name: "Pink", value: "#FFB6C1" },
         { name: "Orange", value: "#FFA500" }
     ];
-
-    // const handleHighlightColorChange = (color: string) => {
-    //     setHighlightColor(color);
-    //     setIsHighlighting(true);
-    // };
-
     return (
         <Popover placement="bottom">
-            <PopoverTrigger>
+            <PopoverTrigger
+             style={{ backgroundColor: highlighterColor }}>
                 <Button
-                    // variant={isHighlighting ? "solid" : "light"}
                     isIconOnly
                     className="min-w-[40px]"
                 >
                     <Highlighter
                         className="h-4 w-4"
+                       
                     />
                 </Button>
             </PopoverTrigger>
@@ -44,21 +36,27 @@ export const HighlightColor: React.FC = () => {
                     {highlightColors.map((color) => (
                         <button
                             key={color.name}
-                            className="w-6 h-6 rounded-full"
+                            className="w-6 h-6 rounded-full hover:w-8 hover:h-8 active:w-6 active:h-6 transition-all duration-200"
                             style={{
                                 backgroundColor: color.value,
-                                // border: highlightColor === color.value
-                                //     ? '2px solid black'
-                                //     : '1px solid gray'
                             }}
-                            // onClick={() => handleHighlightColorChange(color.value)}
+                            
+                            onClick={() => {
+
+                                setHighlight(color.value),
+                                console.log(color.value)
+                                setHighlighterColor(color.value);
+
+                            }}
                         />
                     ))}
+                    {/* // x button to close the popover */}
                     <button
                         className="w-6 h-6 rounded-full bg-white border-2 border-gray-300"
                         onClick={() => {
-                            // setIsHighlighting(false);
-                            // setHighlightColor("transparent");
+                            setHighlight('transparent');
+                            setHighlighterColor('transparent');
+
                         }}
                     >
                         ✕

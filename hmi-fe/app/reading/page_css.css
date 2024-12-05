@@ -1,0 +1,9 @@
+.prose .blackout {
+    background-color: rgb(138, 183, 250);
+    opacity: 1;
+    color: black;
+}
+
+.blackout {
+    font-weight: bold;
+}
