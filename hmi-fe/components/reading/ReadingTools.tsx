@@ -34,6 +34,21 @@ export default function TextFormattingToolbar() {
 
             {/* Highlight Color */}
             <HighlightColor />
+            
+            <BackgroundColor />
+
+            {/* Reading Ruler */}
+            <ReadingRuler />
+
+            {/* Reading Mask */}
+            <ReadingMask />
+            
+            {/* Saving Document */}
+            <SaveDocument />
+
+            <PlayAudio/>
+            <Eraser/>
+
         </div>
     );
 };

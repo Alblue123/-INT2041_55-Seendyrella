@@ -15,7 +15,7 @@ export const LetterSpacing: React.FC = () => {
                     <FaTextWidth />
                 </Button>
             </PopoverTrigger>
-            <PopoverContent>pag
+            <PopoverContent>
                 <div className="flex items-center gap-2 p-2">
                     <label>Letter Spacing:</label>
                     <input
