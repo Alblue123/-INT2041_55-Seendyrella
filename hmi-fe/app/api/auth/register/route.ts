@@ -13,9 +13,7 @@ export async function POST(req: Request) {
             }
         });
         if (existedUserEmail) {
-            return 
-            
-            NextResponse.json({ message: "Email already exists" }, { status: 409 });
+            return NextResponse.json({ message: "Email already exists" }, { status: 409 });
         }
 
         const existedUserName = await db.users.findUnique({
@@ -24,9 +22,7 @@ export async function POST(req: Request) {
             }
         });
         if (existedUserName) {
-            return 
-            
-            NextResponse.json({ message: "Username already exists" }, { status: 409 });
+            return NextResponse.json({ message: "Username already exists" }, { status: 409 });
         }
 
         const hashedPassword = await hash(password, 10);

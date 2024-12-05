@@ -3,6 +3,7 @@ import fs from "fs";
 import { join } from "path";
 import { tmpdir } from "os";
 import mammoth from "mammoth";
+import { db } from "@/lib/prisma"
 
 export async function GET(req: Request) {
     const { searchParams } = new URL(req.url);
@@ -44,5 +45,77 @@ export async function GET(req: Request) {
     } catch (error) {
         console.error("Error reading file:", error);
         return NextResponse.json({ error: "Failed to process the file" }, { status: 500 });
+    }
+}
+
+export async function POST(req: Request) {
+    try {
+        const body = await req.json();
+        console.log("Received payload:", body);  
+
+        const { username, document_name, content, settings } = body;
+
+        if (!username || !document_name || !content || !settings) {
+            console.error("Missing required fields:", { username, document_name, content, settings });
+            return NextResponse.json(
+                { error: "Missing required fields" },
+                { status: 400 }
+            );
+        }
+
+        await saveDocumentToDatabase(username, document_name, content, settings);
+
+        console.log("Saving document:", { username, document_name, content, settings});
+
+        return NextResponse.json({ message: "Document saved successfully!" });
+    } catch (error) {
+        console.error("Error processing request:", error);
+        return NextResponse.json(
+            { error: "Internal Server Error" },
+            { status: 500 }
+        );
+    }
+}
+
+
+
+export async function saveDocumentToDatabase(username: string, bookName: string, content: string, settings: any) {
+    try {
+        const existingDocument = await db.users_documents.findUnique({
+            where: {
+                username_document_name: {
+                    username: username,
+                    document_name: bookName
+                },
+            },
+        });
+
+        if (!existingDocument) {
+            const newDocument = await db.users_documents.create({
+                data: {
+                    username: username,
+                    document_name: bookName,
+                    content: content,
+                    settings: settings,
+                },
+            });
+            console.log("New document created:", newDocument);
+        } else {
+            const updatedDocument = await db.users_documents.update({
+                where: {
+                    username_document_name: {
+                        username: username,
+                        document_name: bookName,
+                    },
+                },
+                data: {
+                    settings: settings,
+                },
+            });
+            console.log("Document updated:", updatedDocument);
+        }
+    } catch (error) {
+        console.error("Error accessing database:", error);
+        throw new Error("Database error");
     }
 }

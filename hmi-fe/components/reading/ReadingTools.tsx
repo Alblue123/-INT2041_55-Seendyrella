@@ -14,7 +14,14 @@ import { BackgroundColor } from './tools/BackgroundColor';
 import { ReadingRuler } from './tools/ReadingRuler';
 import SaveDocument from './tools/SaveDocument';
 
-export default function TextFormattingToolbar() {
+interface TextFormattingToolbarProps {
+    isLoggedIn: boolean;
+    onSave: () => void;
+}
+
+
+export default function TextFormattingToolbar({ isLoggedIn, onSave }: TextFormattingToolbarProps) {
+
     return (
         <div className="flex justify-center items-center gap-2 p-2 border rounded-lg bg-white shadow-sm sticky">
             {/* Font Weight */}
@@ -42,6 +49,7 @@ export default function TextFormattingToolbar() {
 
             {/* Reading Mask */}
             <ReadingMask />
+<<<<<<< HEAD
             
             {/* Saving Document */}
             <SaveDocument />
@@ -49,6 +57,15 @@ export default function TextFormattingToolbar() {
             <PlayAudio/>
             <Eraser/>
 
+=======
+
+             {/* Saving Document */}
+            {isLoggedIn && (
+                <>
+                    <SaveDocument onSave={onSave}/>
+                </>
+            )}
+>>>>>>> linking-be
         </div>
     );
 };
