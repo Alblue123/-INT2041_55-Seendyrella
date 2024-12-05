@@ -1,50 +1,80 @@
 import { NextResponse } from "next/server";
 import fs from "fs";
-import { join } from "path";
+import { join, resolve } from "path";
 import { tmpdir } from "os";
 import mammoth from "mammoth";
-import { db } from "@/lib/prisma"
+import { db } from "@/lib/prisma";
+import ConvertAPI from 'convertapi';
+
+const convertapi = new ConvertAPI('secret_PxZOYi6kRjziuOot');
 
 export async function GET(req: Request) {
     const { searchParams } = new URL(req.url);
     const fileName = searchParams.get("fileName");
 
     if (!fileName) {
-        return NextResponse.json({ error: "File name is required" }, { status: 400 });
+      return NextResponse.json({ error: "File name is required" }, { status: 400 });
     }
 
     try {
-        const saveDir = join(tmpdir(), "uploads");
-        const filePath = join(saveDir, fileName);
+      const saveDir = join(tmpdir(), "uploads");
+      const filePath = join(saveDir, fileName);
 
+      if (!fs.existsSync(filePath)) {
+        return NextResponse.json({ error: "File not found" }, { status: 404 });
+      }
 
-        if (!fs.existsSync(filePath)) {
-            return NextResponse.json({ error: "File not found" }, { status: 404 });
-        }
+      const outputDir = join(tmpdir(), "converted");
 
-        const buffer = fs.readFileSync(filePath);
+      if (!fs.existsSync(outputDir)) {
+        fs.mkdirSync(outputDir);
+      }
 
-        // Convert the DOCX buffer to HTML with custom styles
-        const mammothResult = await mammoth.convertToHtml({ 
-            buffer 
-        });
+      let htmlContent: string;
 
-        const outputDir = join(tmpdir(), "converted");
-        if (!fs.existsSync(outputDir)) {
-            fs.mkdirSync(outputDir);
-        }
+      if (fileName.toLowerCase().endsWith('.docx')) {
+        // Process DOCX with Mammoth
+        const fileBuffer = fs.readFileSync(filePath);
+        const mammothResult = await mammoth.convertToHtml({ buffer: fileBuffer });
+        htmlContent = mammothResult.value;
 
+        // Save the HTML output for reference
         const outputFilePath = join(outputDir, `${fileName}.html`);
-        fs.writeFileSync(outputFilePath, mammothResult.value);
+        fs.writeFileSync(outputFilePath, htmlContent);
+      } else if (fileName.toLowerCase().endsWith('.pdf')) {
+        // Convert PDF to DOCX using ConvertAPI
+        const pdfFilePath = resolve(filePath);
+        const convertedFileName = fileName.replace('.pdf', '.docx');
+        const convertedFilePath = join(outputDir, convertedFileName);
 
+        // Perform the PDF to DOCX conversion
+        const result = await convertapi.convert('docx', { File: pdfFilePath }, 'pdf');
+        await result.saveFiles(outputDir);
 
-        return new Response(mammothResult.value, { 
-            status: 200, 
-            headers: { "Content-Type": "text/html" } 
-        });
+        // Process the converted DOCX with Mammoth
+        const fileBuffer = fs.readFileSync(convertedFilePath);
+        const mammothResult = await mammoth.convertToHtml({ buffer: fileBuffer });
+        htmlContent = mammothResult.value;
+
+        // Save the HTML output for reference
+        const outputFilePath = join(outputDir, `${fileName}.html`);
+        fs.writeFileSync(outputFilePath, htmlContent);
+      } else {
+        return NextResponse.json({ error: "Unsupported file type" }, { status: 415 });
+      }
+
+      // Return the extracted HTML content
+      return new Response(htmlContent, {
+        status: 200,
+        headers: {
+          "Content-Type": "text/html",
+        },
+      });
     } catch (error) {
-        console.error("Error reading file:", error);
-        return NextResponse.json({ error: "Failed to process the file" }, { status: 500 });
+      console.error("Unexpected error processing file:", error);
+      return NextResponse.json({ 
+        error: "Unexpected error occurred", 
+      }, { status: 500 });
     }
 }
 

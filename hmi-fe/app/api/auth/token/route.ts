@@ -5,7 +5,7 @@ export async function GET(req: NextRequest) {
     const token = await getToken({ req, secret: process.env.SECRET });
 
     if (!token) {
-        return NextResponse.json({ error: "Invalid or missing token" }, { status: 401 });
+        return NextResponse.json({ message: "Invalid or missing token" }, { status: 401 });
     }
 
     console.log("Token content:", token);

@@ -27,7 +27,7 @@ export default function Page() {
                 });
 
                 if (!req.ok) {
-                    console.error("Invalid token");
+                    console.log("Invalid token");
                     return;
                 }
     

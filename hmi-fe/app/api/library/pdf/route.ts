@@ -19,14 +19,13 @@ const generatePDF = async (content: string, settings: any) => {
                 font-style: ${settings.fontStyle || 'normal'};
                 text-decoration: ${settings.textDecoration || 'none'};
                 letter-spacing: ${settings.letterSpacing || '0px'};
-                background-color: ${settings.backgroundColor || '#FFFFFF'};
             }
         </style>
     `;
 
     // Set the HTML content with styles
     await page.setContent(styles + content);
-    const pdfBuffer = await page.pdf({ format: 'A4', printBackground: true });
+    const pdfBuffer = await page.pdf({ format: 'A4', printBackground: false });
 
     await browser.close();
 
