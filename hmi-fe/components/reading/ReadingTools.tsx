@@ -49,7 +49,6 @@ export default function TextFormattingToolbar({ isLoggedIn, onSave }: TextFormat
 
             {/* Reading Mask */}
             <ReadingMask />
-<<<<<<< HEAD
             
             {/* Saving Document */}
             <SaveDocument />
@@ -57,7 +56,6 @@ export default function TextFormattingToolbar({ isLoggedIn, onSave }: TextFormat
             <PlayAudio/>
             <Eraser/>
 
-=======
 
              {/* Saving Document */}
             {isLoggedIn && (
@@ -65,7 +63,6 @@ export default function TextFormattingToolbar({ isLoggedIn, onSave }: TextFormat
                     <SaveDocument onSave={onSave}/>
                 </>
             )}
->>>>>>> linking-be
         </div>
     );
 };

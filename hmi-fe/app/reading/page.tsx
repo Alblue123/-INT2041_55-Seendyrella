@@ -3,9 +3,10 @@ import { useFormatting } from '@/components/reading/formatting/UseFormatting';
 import { FormattingProvider } from '@/components/reading/formatting/UseFormatting';
 import TextFormattingToolbar from '@/components/reading/ReadingTools';
 import DocumentLayout from '@/components/reading/Document';
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import "./page_css.css"
+
 import Cookies from "js-cookie";
 import { line } from 'framer-motion/client';
 
@@ -14,26 +15,28 @@ import { line } from 'framer-motion/client';
 export default function Page() {
     const searchParams = useSearchParams();
     const fileName = searchParams.get("fileName");
+    const documentName = searchParams.get("documenName");
 
     return (
         <FormattingProvider>
-            <PageContent fileName={fileName} />
-        </FormattingProvider>
+<PageContent fileName={fileName} document_name={documentName} />       
+            </FormattingProvider>
     );
 }
 
 interface PageContentProps {
     fileName: string | null;
+    documentName: string | null;
 }
 
-function PageContent({ fileName }: PageContentProps) {
-    const fileName = searchParams.get("fileName");
+function PageContent({ fileName, documentName }: PageContentProps) {
+    // const fileName = searchParams.get("fileName");
     const [filename, setFilename] = useState<string>("");
-    const [content, setContent] = useState<string>("");
+    // const [content, setContent] = useState<string>("");
     const [selectedText, setSelectedText] = useState<string>("");
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [username, setUsername] = useState<string>("");
-    const documentName = searchParams.get("document_name");
+    // const documentName = searchParams.get("document_name");
     const { handleSelection, content, setContent } = useFormatting();
 
     useEffect(() => {
@@ -116,7 +119,7 @@ function PageContent({ fileName }: PageContentProps) {
                 });
         }
     }, [documentName]);
-    
+
     const handleSave = async () => {
         try {
             if (!username) {
@@ -174,7 +177,7 @@ function PageContent({ fileName }: PageContentProps) {
 
     return (
         <>
-            <TextFormattingToolbar />
+            <TextFormattingToolbar isLoggedIn={isLoggedIn} onSave={handleSave} />
             <DocumentLayout>
                 <div
                     className="prose"
