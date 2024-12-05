@@ -24,7 +24,7 @@ interface PageContentProps {
 
 function PageContent({ fileName }: PageContentProps) {
     const { handleSelection, content, setContent } = useFormatting();
-
+    
     useEffect(() => {
         if (fileName) {
             fetch(`/api/reading?fileName=${encodeURIComponent(fileName)}`)

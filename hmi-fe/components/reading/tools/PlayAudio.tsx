@@ -33,31 +33,42 @@ export const PlayAudio: React.FC = () => {
       if (selection && selection.toString()) {
         const text = selection.toString();
         console.log("Selected text:", text);
-        const user_id = '31Ivv5ymNXOEmPxBSBzonXQr5PF2';
-        const secret_key = '761a57aab3c84b1f96d30125f2fdec86';
+        const user_id = 'yRyXEC1EG2bK6XxzQuw3SgHmfHz2';
+        const secret_key = '322c3ca0457e4cbb9d0f992d64bcbe3c';
         const url ='https://api.play.ht/api/v2/tts/stream'; 
+
         const options = {
           method: "POST",
           headers: {
-            accept: "audio/mpeg",
+            'accept': "audio/mpeg",
             "content-type": "application/json",
             "X-USER-ID": user_id,
-            AUTHORIZATION: secret_key,
+            'AUTHORIZATION': secret_key,
           },
           body: JSON.stringify({
-            voice_engine: "Play3.0-mini",
-            text: text,
-            output_format: "mp3",
-            sample_rate: "44100",
-            speed: 1,
+            "text": text,
+            "voice": "s3://voice-cloning-zero-shot/775ae416-49bb-4fb6-bd45-740f205d20a1/jennifersaad/manifest.json",
+            "output_format": "mp3",
+            "temperature": 0.7
           }),
         };
 
         const response = await fetch(url, options);
-        const readableStream = response.body;
-        console.log("Response:", response.body);
-        // Pipe the readable stream to a writable stream, this can be a local file or any other writable stream
-        // readableStream.pipe(fs.createWriteStream("./audio.mp3"));
+        const arrayBuffer = await response.arrayBuffer();
+        
+        // Create audio context
+        const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+        
+        // Decode audio data
+        const audioBuffer = await audioContext.decodeAudioData(arrayBuffer);
+        
+        // Create audio source
+        const source = audioContext.createBufferSource();
+        source.buffer = audioBuffer;
+        source.connect(audioContext.destination);
+        console.log("Audio source:", source);
+        // Play the audio
+        source.start(0);
         
       }
     }

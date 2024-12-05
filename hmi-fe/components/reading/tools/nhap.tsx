@@ -12,9 +12,6 @@ export const generateAndStreamAudio = async (input_text: string) => {
             userId: user_id,
             apiKey: secret_key,
         });
-
-        // let input_text = "Yes, integrating React with Django Admin is viable";
-        // const filePath = "D:\\Downloads\\Kì này\\HMI\\-INT2041_55-Seendyrella\\hmi-fe\\public\\audio\\hello-playht.mp3";
         const path = require("path");
         const filePath = path.join(__dirname, "audio.mp3");
         const fileStream = fs.createWriteStream(filePath);
