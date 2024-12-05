@@ -110,7 +110,6 @@ export const FormattingProvider: React.FC<{ children: ReactNode }> = ({ children
                 handleSelection,
                 highlight,
                 setHighlight,
-                setLetterSpacing,
                 backgroundColor,
                 setBackgroundColor,
                 readingRuler,
@@ -123,7 +122,6 @@ export const FormattingProvider: React.FC<{ children: ReactNode }> = ({ children
                 setReadingMask,
                 rulerPosition,
                 setRulerPosition,
-                setLetterSpacing
             }}
         >
             {children}
