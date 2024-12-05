@@ -14,10 +14,12 @@ import SaveDocument from './tools/SaveDocument';
 
 interface TextFormattingToolbarProps {
     isLoggedIn: boolean;
+    onSave: () => void;
 }
 
 
-export default function TextFormattingToolbar({ isLoggedIn }: TextFormattingToolbarProps) {
+export default function TextFormattingToolbar({ isLoggedIn, onSave }: TextFormattingToolbarProps) {
+
     return (
         <div className="flex justify-center items-center gap-2 p-2 border rounded-lg bg-white shadow-sm sticky">
             {/* Font Weight */}
@@ -50,7 +52,7 @@ export default function TextFormattingToolbar({ isLoggedIn }: TextFormattingTool
              {/* Saving Document */}
             {isLoggedIn && (
                 <>
-                    <SaveDocument />
+                    <SaveDocument onSave={onSave}/>
                 </>
             )}
         </div>

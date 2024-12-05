@@ -48,28 +48,73 @@ export async function GET(req: Request) {
     }
 }
 
-/*export async function POST(req: Request) {
+export async function POST(req: Request) {
     try {
         const body = await req.json();
-        const {username, filename, content } = body;
-    }
-}*/
+        console.log("Received payload:", body);
 
-async function saveDocumentToDatabase(username: string, bookName: string, content: string) {
-    const existedUserName = await db.users.findUnique({
-        where: {
-            username: username
-        }
-    });
-    if (!existedUserName) {
-        return NextResponse.json({ message: "This user haven't linked to our database" }, { status: 409 });
-    }
+        const { username, document_name, content } = body;
 
-    const newDocument = await db.users_documents.create({
-        data: {
-            username: username,
-            document_name: bookName,
-            content: content
+        if (!username || !document_name || !content) {
+            console.error("Missing required fields:", { username, document_name, content });
+            return NextResponse.json(
+                { error: "Missing required fields" },
+                { status: 400 }
+            );
         }
-    })
+
+        await saveDocumentToDatabase(username, document_name, content);
+
+        // Simulate saving to the database
+        console.log("Saving document:", { username, document_name, content });
+
+        return NextResponse.json({ message: "Document saved successfully!" });
+    } catch (error) {
+        console.error("Error processing request:", error);
+        return NextResponse.json(
+            { error: "Internal Server Error" },
+            { status: 500 }
+        );
+    }
+}
+
+
+export async function saveDocumentToDatabase(username: string, bookName: string, content: string) {
+    try {
+        const existingDocument = await db.users_documents.findUnique({
+            where: {
+                username_document_name: {
+                    username: username,
+                    document_name: bookName
+                },
+            },
+        });
+
+        if (!existingDocument) {
+            const newDocument = await db.users_documents.create({
+                data: {
+                    username: username,
+                    document_name: bookName,
+                    content: content,
+                },
+            });
+            console.log("New document created:", newDocument);
+        } else {
+            const updatedDocument = await db.users_documents.update({
+                where: {
+                    username_document_name: {
+                        username: username,
+                        document_name: bookName,
+                    },
+                },
+                data: {
+                    content: content,
+                },
+            });
+            console.log("Document updated:", updatedDocument);
+        }
+    } catch (error) {
+        console.error("Error accessing database:", error);
+        throw new Error("Database error");
+    }
 }
