@@ -13,7 +13,7 @@ export const FontSize: React.FC = () => {
     const handleFontSizeChange = (keys: any) => {
         const selectedSize = Array.from(keys)[0] as string;
         // Always update, even if the same size is selected
-        setFontSize(selectedSize);
+        setFontSize(Number(selectedSize));
     };
 
     return (

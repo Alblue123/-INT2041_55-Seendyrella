@@ -51,22 +51,21 @@ export async function GET(req: Request) {
 export async function POST(req: Request) {
     try {
         const body = await req.json();
-        console.log("Received payload:", body);
+        console.log("Received payload:", body);  
 
-        const { username, document_name, content } = body;
+        const { username, document_name, content, settings } = body;
 
-        if (!username || !document_name || !content) {
-            console.error("Missing required fields:", { username, document_name, content });
+        if (!username || !document_name || !content || !settings) {
+            console.error("Missing required fields:", { username, document_name, content, settings });
             return NextResponse.json(
                 { error: "Missing required fields" },
                 { status: 400 }
             );
         }
 
-        await saveDocumentToDatabase(username, document_name, content);
+        await saveDocumentToDatabase(username, document_name, content, settings);
 
-        // Simulate saving to the database
-        console.log("Saving document:", { username, document_name, content });
+        console.log("Saving document:", { username, document_name, content, settings});
 
         return NextResponse.json({ message: "Document saved successfully!" });
     } catch (error) {
@@ -79,7 +78,8 @@ export async function POST(req: Request) {
 }
 
 
-export async function saveDocumentToDatabase(username: string, bookName: string, content: string) {
+
+export async function saveDocumentToDatabase(username: string, bookName: string, content: string, settings: any) {
     try {
         const existingDocument = await db.users_documents.findUnique({
             where: {
@@ -96,6 +96,7 @@ export async function saveDocumentToDatabase(username: string, bookName: string,
                     username: username,
                     document_name: bookName,
                     content: content,
+                    settings: settings,
                 },
             });
             console.log("New document created:", newDocument);
@@ -108,7 +109,7 @@ export async function saveDocumentToDatabase(username: string, bookName: string,
                     },
                 },
                 data: {
-                    content: content,
+                    settings: settings,
                 },
             });
             console.log("Document updated:", updatedDocument);

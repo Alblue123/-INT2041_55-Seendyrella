@@ -25,6 +25,7 @@ model users_documents {
   id Int @id @default(autoincrement())
   document_name String @unique
   content String
+  settings Json
 
   //Relation to users
   username String @unique
