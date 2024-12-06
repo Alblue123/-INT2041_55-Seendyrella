@@ -7,7 +7,7 @@ import "./navBar.css"
 export default function NavBar() {
     const router = useRouter();
     return (
-        <div>
+        <div className="navBar">
             {/* desktop */}
             <Navbar className="" isBordered>
                 <NavbarBrand className="" >
