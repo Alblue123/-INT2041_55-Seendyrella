@@ -23,12 +23,12 @@ model users {
 
 model users_documents {
   id Int @id @default(autoincrement())
-  document_name String @unique
+  document_name String 
   content String
   settings Json
 
   //Relation to users
-  username String @unique
+  username String
   users users @relation(fields: [username], references: [username], onDelete: Cascade)
 
   @@unique([username, document_name])

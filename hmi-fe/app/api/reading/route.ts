@@ -140,6 +140,7 @@ export async function saveDocumentToDatabase(username: string, bookName: string,
                 },
                 data: {
                     settings: settings,
+                    content: content,
                 },
             });
             console.log("Document updated:", updatedDocument);

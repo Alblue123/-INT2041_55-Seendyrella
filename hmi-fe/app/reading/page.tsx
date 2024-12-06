@@ -107,10 +107,6 @@ function PageContent({ fileName, documentName }: PageContentProps) {
                     Cookies.set(`lineHeight`, fetchedSettings.lineHeight);
                     Cookies.set(`letterSpacing`, fetchedSettings.letterSpacing);
                     Cookies.set(`backgroundColor`, fetchedSettings.backgroundColor);
-                    Cookies.set(`readingRuler`, fetchedSettings.readingRuler);
-                    Cookies.set(`rulerHeight`, fetchedSettings.rulerHeight);
-                    Cookies.set(`rulerColor`, fetchedSettings.rulerColor);
-                    Cookies.set(`readingMask`, fetchedSettings.readingMask);
                 })
                 .catch((err) => {
                     console.error("Failed to fetch file content:", err);
@@ -136,11 +132,7 @@ function PageContent({ fileName, documentName }: PageContentProps) {
                 textDecoration: Cookies.get(`textDecoration`),
                 lineHeight: Cookies.get(`lineHeight`),
                 letterSpacing: Cookies.get(`letterSpacing`),
-                backgroundColor: Cookies.get(`backgroundColor`),
-                readingRuler: Cookies.get(`readingRuler`),
-                rulerHeight: Cookies.get(`rulerHeight`),
-                rulerColor: Cookies.get(`rulerColor`),
-                readingMask: Cookies.get(`readingMask`),
+                backgroundColor: Cookies.get(`backgroundColor`)
             };
     
             // Ensure settings is not empty
@@ -180,11 +172,11 @@ function PageContent({ fileName, documentName }: PageContentProps) {
             <DocumentLayout>
                 <div
                     className="prose"
-                    contentEditable
-                    suppressContentEditableWarning
+                    //contentEditable
+                    //suppressContentEditableWarning
                     onMouseUp={handleSelection}
                     onKeyUp={handleSelection}
-                    onInput={(e) => setContent(e.currentTarget.innerHTML)}
+                    //onInput={(e) => setContent(e.currentTarget.innerHTML)}
                     dangerouslySetInnerHTML={{
                         __html: content,
                     }}

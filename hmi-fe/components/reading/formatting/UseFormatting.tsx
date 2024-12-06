@@ -128,10 +128,6 @@ export const FormattingProvider: React.FC<{ children: ReactNode }> = ({ children
             Cookies.set('lineHeight', lineHeight.toString(), { expires: 365 });
             Cookies.set('letterSpacing', letterSpacing.toString(), { expires: 365 });
             Cookies.set('backgroundColor', backgroundColor, { expires: 365 });
-            Cookies.set('readingRuler', readingRuler.toString(), { expires: 365 });
-            Cookies.set('rulerHeight', rulerHeight.toString(), { expires: 365 });
-            Cookies.set('rulerColor', rulerColor, { expires: 365 });
-            Cookies.set('readingMask', readingMask.toString(), { expires: 365 });
         }
     }, [
         cookiesLoaded,
@@ -143,10 +139,6 @@ export const FormattingProvider: React.FC<{ children: ReactNode }> = ({ children
         lineHeight,
         letterSpacing,
         backgroundColor,
-        readingRuler,
-        rulerHeight,
-        rulerColor,
-        readingMask
     ]);
 
     // To avoid hydration mismatch, only render once cookies are loaded
