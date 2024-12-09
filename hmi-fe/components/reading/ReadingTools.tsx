@@ -13,17 +13,15 @@ import { ReadingMask } from './tools/ReadingMask';
 import { BackgroundColor } from './tools/BackgroundColor';
 import { ReadingRuler } from './tools/ReadingRuler';
 import SaveDocument from './tools/SaveDocument';
+import {Sidebar} from './tools/summarize'
 
 interface TextFormattingToolbarProps {
     isLoggedIn: boolean;
     onSave: () => void;
 }
-
-
-export default function TextFormattingToolbar({ isLoggedIn, onSave }: TextFormattingToolbarProps) {
-
+export default function TextFormattingToolbar() {
     return (
-        <div className="flex justify-center items-center gap-2 p-2 border rounded-lg bg-white shadow-sm sticky">
+        <div className="fixed top-1 left-0 w-full flex justify-center items-center gap-2 p-2 border rounded-lg bg-white shadow-sm pt-20 ">
             {/* Font Weight */}
             <FontWeight />
 
