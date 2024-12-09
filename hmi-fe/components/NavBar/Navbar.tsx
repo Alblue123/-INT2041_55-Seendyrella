@@ -39,7 +39,7 @@ export default function NavBar() {
                     <NavbarItem className="lg:flex font-bold hover:cursor-pointer">
                         <div className="flex items-center space-x-2">
                             <span className="">
-                               Welcome back: {session.user.name || session.user.email}
+                               Welcome back: {session.user.username} !
                             </span>
                             <Link
                                 onClick={() => signOut({ callbackUrl: '/' })}
