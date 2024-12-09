@@ -10,7 +10,7 @@ export default function Home() {
     setLoading(true);
     setSummary(''); 
     try {
-      const response = await fetch('https://059d-35-233-205-201.ngrok-free.app', {
+      const response = await fetch('https://08a1-34-124-236-166.ngrok-free.app', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

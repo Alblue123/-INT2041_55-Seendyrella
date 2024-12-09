@@ -38,8 +38,8 @@ color-code {
   font-style: italic;
 }
 .tools_bar {
-  position: fixed;          /* Add fixed positioning */
-  top: 64px;               /* Match your navbar height */
+  position: fixed;          
+  top: 64px;               
   left: 0;             
   width: 100%;         
   display: flex;       

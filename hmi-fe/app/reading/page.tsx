@@ -180,7 +180,7 @@ function PageContent({ fileName, documentName }: PageContentProps) {
             <DocumentLayout>
                 <div
                     className="prose"
-                    contentEditable
+                    // contentEditable
                     suppressContentEditableWarning
                     onMouseUp={handleSelection}
                     onKeyUp={handleSelection}

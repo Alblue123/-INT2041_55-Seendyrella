@@ -23,7 +23,7 @@ const DocumentLayout: React.FC<DocumentLayoutProps> = ({ children }) => {
          setSummary(''); 
         try {
              const textContent = contentRef.current.innerText;
-             const response = await fetch('https://1b70-34-74-99-133.ngrok-free.app', {
+             const response = await fetch('https://08a1-34-124-236-166.ngrok-free.app', {
              method: 'POST',
              headers: {
                      'Content-Type': 'application/json',
