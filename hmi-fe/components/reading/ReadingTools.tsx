@@ -16,7 +16,7 @@ import SaveDocument from './tools/SaveDocument';
 import {Sidebar} from './tools/summarize'
 import "@/app/globals.css";
 import {NewFontWeight} from './tools/NewFontWeight'
-
+import {Spelling} from './tools/Spelling'
 interface TextFormattingToolbarProps {
     isLoggedIn: boolean;
     onSave: () => void;
@@ -53,6 +53,7 @@ export default function TextFormattingToolbar({ isLoggedIn, onSave }: TextFormat
             <ReadingMask />
 
             <PlayAudio/>
+            <Spelling/>
             <Eraser/>
 
 

@@ -71,7 +71,11 @@ export const FormattingProvider: React.FC<{ children: ReactNode }> = ({
   const [content, setContent] = useState<string>("");
   const [highlight, setHighlight] = useState<string>("");
 
+  
   const handleSelection = () => {
+    if (fontWeight === "normal" && (!highlight || highlight === "transparent")) {
+        return;
+      }
     const selection = window.getSelection();
     if (selection && selection.toString()) {
       const text = selection.toString();
