@@ -13,7 +13,7 @@ color-code {
   color: #1849D6;
 }
 
-.navBarButton, button {
+.navBarButton, .narbBar ~ button {
     display: inline;
     font-family: "Inter", sans-serif;
   font-optical-sizing: auto;

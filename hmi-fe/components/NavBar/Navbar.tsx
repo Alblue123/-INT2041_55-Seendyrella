@@ -2,7 +2,8 @@
 
 import { Navbar, NavbarBrand, NavbarContent, NavbarItem, Link} from "@nextui-org/react";
 import { useRouter } from "next/navigation"; 
-import "./navBar.css"
+
+import "./navBar.css";
 
 export default function NavBar() {
     const router = useRouter();

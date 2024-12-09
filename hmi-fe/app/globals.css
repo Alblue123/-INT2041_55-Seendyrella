@@ -2,6 +2,17 @@
 @tailwind components;
 @tailwind utilities;
 
+@import url('https://fonts.googleapis.com/css2?family=Funnel+Sans:ital,wght@0,300..800;1,300..800&family=Itim&display=swap');
+
+@import url('https://fonts.googleapis.com/css2?family=Funnel+Sans:ital,wght@0,300..800;1,300..800&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Itim&display=swap');
+color-code {
+    color: #1849D6;
+}
+
+
+.navBar {
+}
+
 .heading {
   @apply text-2xl font-semibold text-blue-500 mb-6;
 }
@@ -26,4 +37,18 @@
   font-weight: normal;
   font-style: italic;
 }
-
+.tools_bar {
+  position: fixed;          /* Add fixed positioning */
+  top: 64px;               /* Match your navbar height */
+  left: 0;             
+  width: 100%;         
+  display: flex;       
+  justify-content: center;  
+  align-items: center;      
+  gap: 0.5rem;         
+  padding: 0.5rem;     
+  border: 1px solid #e5e7eb;
+  background-color: white;    
+  box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  z-index: 999; 
+}

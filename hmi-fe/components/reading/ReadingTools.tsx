@@ -14,14 +14,15 @@ import { BackgroundColor } from './tools/BackgroundColor';
 import { ReadingRuler } from './tools/ReadingRuler';
 import SaveDocument from './tools/SaveDocument';
 import {Sidebar} from './tools/summarize'
+import "@/app/globals.css";
 
 interface TextFormattingToolbarProps {
     isLoggedIn: boolean;
     onSave: () => void;
 }
-export default function TextFormattingToolbar() {
+export default function TextFormattingToolbar({ isLoggedIn, onSave }: TextFormattingToolbarProps) {
     return (
-        <div className="fixed top-1 left-0 w-full flex justify-center items-center gap-2 p-2 border rounded-lg bg-white shadow-sm pt-20 ">
+        <div className="tools_bar">
             {/* Font Weight */}
             <FontWeight />
 
