@@ -17,7 +17,7 @@ export const ReadingMask: React.FC = () => {
                 <Switch
                     isSelected={readingMask}
                     onValueChange={setReadingMask}
-                    size="sm"
+                    size="1g"
                     color="primary"
                     startContent={<LayoutTemplate className="w-4 h-4" />}
                 />

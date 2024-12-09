@@ -72,10 +72,8 @@ const DocumentLayout: React.FC<DocumentLayoutProps> = ({ children }) => {
             onMouseMove={handleMouseMove}
         >
             <div className={`max-w-7xl mx-auto px-4 py-8 h-full min-h-screen transition-all ${isSidebarOpen ? 'mr-80' : ''}`}>
-              <div className="w-full h-full min-h-[calc(100vh-4rem)] bg-white rounded-lg shadow-sm mx-auto p-8">
                     
-            <div className="max-w-7xl mx-auto px-4 py-8 h-full min-h-screen">
-                <div className="w-full h-full min-h-[calc(100vh-4rem)] bg-white rounded-lg shadow-sm mx-auto p-8 relative overflow-hidden">
+                        <div className="w-full max-w-6xl h-full min-h-[calc(100vh-4rem)] bg-white rounded-lg shadow-sm mx-auto p-8 relative overflow-hidden"> 
                     {readingRuler && (
                         <div
                             className="absolute left-0 right-0 pointer-events-none z-50"
@@ -142,8 +140,7 @@ const DocumentLayout: React.FC<DocumentLayoutProps> = ({ children }) => {
                         setSidebarOpen={setSidebarOpen} 
                     />
             </div>
-        </div>
-        </div>
+       
     );
 };
 
