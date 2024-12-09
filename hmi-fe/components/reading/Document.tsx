@@ -119,7 +119,7 @@ const DocumentLayout: React.FC<DocumentLayoutProps> = ({ children }) => {
                             mx-auto 
                             overflow-auto
                             relative z-30
-                            ${fontWeight === 'bold' ? 'font-bold' : 'font-normal'}
+                            ${fontWeight === 'bold' ? 'bold' : ''}
                             ${fontStyle === 'italic' ? 'italic' : ''}
                             ${textDecoration === 'underline' ? 'underline' : ''}
                         `}

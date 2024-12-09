@@ -15,6 +15,7 @@ import { ReadingRuler } from './tools/ReadingRuler';
 import SaveDocument from './tools/SaveDocument';
 import {Sidebar} from './tools/summarize'
 import "@/app/globals.css";
+import {NewFontWeight} from './tools/NewFontWeight'
 
 interface TextFormattingToolbarProps {
     isLoggedIn: boolean;
@@ -24,9 +25,11 @@ export default function TextFormattingToolbar({ isLoggedIn, onSave }: TextFormat
     return (
         <div className="tools_bar">
             {/* Font Weight */}
-            <FontWeight />
+            {/* <NewFontWeight /> */}
+            <NewFontWeight/>
 
             {/* Line Height */}
+
             <LineSpacing />
             
             {/* Letter Spacing */}
