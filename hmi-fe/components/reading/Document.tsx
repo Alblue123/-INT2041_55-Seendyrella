@@ -67,11 +67,11 @@ const DocumentLayout: React.FC<DocumentLayoutProps> = ({ children }) => {
 
     return (
         <div
-            className="min-h-screen"
+            className="min-h-screen document_container"
             style={{ backgroundColor }}
             onMouseMove={handleMouseMove}
         >
-                        <div className={`max-w-7xl mx-auto px-4 py-8 h-full min-h-screen transition-all ${isSidebarOpen ? 'mr-80' : ''}`}>
+            <div className={`max-w-7xl mx-auto px-4 py-8 h-full min-h-screen transition-all ${isSidebarOpen ? 'mr-80' : ''}`}>
               <div className="w-full h-full min-h-[calc(100vh-4rem)] bg-white rounded-lg shadow-sm mx-auto p-8">
                     
             <div className="max-w-7xl mx-auto px-4 py-8 h-full min-h-screen">
