@@ -5,10 +5,15 @@ import { useRouter } from "next/navigation";
 import { useSession, signOut } from "next-auth/react";
 
 import "./navBar.css";
+import { useEffect } from "react";
 
 export default function NavBar() {
     const router = useRouter();
     const { data: session, status } = useSession();
+    useEffect(() => {
+        console.log("Full Session Object:", session);
+        console.log("User Object:", session?.user);
+    }, [session]);
 
     const handleProtectedRoute = (route: string) => {
         if (status === "authenticated") {
@@ -39,7 +44,7 @@ export default function NavBar() {
                     <NavbarItem className="lg:flex font-bold hover:cursor-pointer">
                         <div className="flex items-center space-x-2">
                             <span className="">
-                               Welcome back: {session.user.name || session.user.email}
+                               Welcome back: {session.user.username || session.user.email} !
                             </span>
                             <Link
                                 onClick={() => signOut({ callbackUrl: '/' })}
