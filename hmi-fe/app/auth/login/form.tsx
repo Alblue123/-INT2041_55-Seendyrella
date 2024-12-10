@@ -25,7 +25,7 @@ export default function LoginForm() {
     return (
         <div className="min-h-screen w-full flex">
             {/* Left side - Background Image */}
-            <div className="hidden desktop:block desktop:w-1/3 laptop:block laptop:w-1/3 relative bg-auth-image">
+            <div className="hidden desktop:block desktop:w-1/3 laptop:block laptop:w-1/3 relative bg-auth-image bg-cover">
                 <div className="absolute bottom-8 left-8 text-white text-sm">
                     <p>© 2024 Seendyrella</p>
                 </div>
