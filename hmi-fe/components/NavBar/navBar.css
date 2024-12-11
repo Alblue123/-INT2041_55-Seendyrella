@@ -13,11 +13,19 @@ color-code {
   color: #1849D6;
 }
 
-.navBarButton, button {
+.navBarButton, .narbBar ~ button {
     display: inline;
     font-family: "Inter", sans-serif;
   font-optical-sizing: auto;
   font-weight: 500;
   font-style: normal;
   color: #1849D6;
+}
+.navBar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%; /* Đảm bảo header bao phủ toàn bộ chiều ngang */
+  z-index: 999;/* Đảm bảo header luôn nằm trên các thành phần khác  */ 
+  background-color: white;
 }

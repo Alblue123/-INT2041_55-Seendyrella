@@ -1,8 +1,8 @@
 "use client";
 
-import React, { useRef, useState } from 'react';
+import { FC, ReactNode, useRef, useState } from 'react';
 import { useFormatting } from './formatting/UseFormatting';
-
+import Sidebar from './tools/summarize'
 interface DocumentLayoutProps {
     children?: React.ReactNode;
 }
@@ -10,7 +10,45 @@ interface DocumentLayoutProps {
 const DocumentLayout: React.FC<DocumentLayoutProps> = ({ children }) => {
     const contentRef = useRef<HTMLDivElement>(null);
     const [mouseY, setMouseY] = useState(0);
-
+    const [text, setText] = useState('');
+    const [summary, setSummary] = useState('');
+    //const [loading, setLoading] = useState(false);
+    const [isSidebarOpen, setSidebarOpen] = useState(false);
+    const handleSummarize = async () => {
+        if (!contentRef.current) {
+            console.error('Content is empty');
+            return;
+        }
+         //setLoading(true);
+         setSummary(''); 
+        try {
+             const textContent = contentRef.current.innerText;
+             const response = await fetch('https://08a1-34-124-236-166.ngrok-free.app', {
+             method: 'POST',
+             headers: {
+                     'Content-Type': 'application/json',
+                        },
+             body: JSON.stringify({
+             text: textContent,
+             ratio: 0.2, // chỉnh tỉ lệ tóm tắt
+             }),
+      });
+         const data = await response.json();
+      
+         console.log('Summary:', data.summary);
+         setSummary(data.summary);
+         } catch (error) {
+              console.error('Error summarizing:', error);
+             setSummary('Error summarizing text. Please try again later.');
+         }
+            // setLoading(false);
+    };
+    const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+        if (contentRef.current) {
+            const rect = contentRef.current.getBoundingClientRect();
+            setMouseY(e.clientY - rect.top);
+        }
+    };
     const {
         fontSize,
         fontFamily,
@@ -27,21 +65,15 @@ const DocumentLayout: React.FC<DocumentLayoutProps> = ({ children }) => {
         readingMask
     } = useFormatting();
 
-    const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-        if (contentRef.current) {
-            const rect = contentRef.current.getBoundingClientRect();
-            setMouseY(e.clientY - rect.top);
-        }
-    };
-
     return (
         <div
-            className="min-h-screen"
+            className="min-h-screen document_container"
             style={{ backgroundColor }}
             onMouseMove={handleMouseMove}
         >
-            <div className="max-w-7xl mx-auto px-4 py-8 h-full min-h-screen">
-                <div className="w-full h-full min-h-[calc(100vh-4rem)] bg-white rounded-lg shadow-sm mx-auto p-8 relative overflow-hidden">
+            <div className={`max-w-7xl mx-auto px-4 py-8 h-full min-h-screen transition-all ${isSidebarOpen ? 'mr-80' : ''}`}>
+                    
+                        <div className="w-full max-w-6xl h-full min-h-[calc(100vh-4rem)] bg-white rounded-lg shadow-sm mx-auto p-8 relative overflow-hidden"> 
                     {readingRuler && (
                         <div
                             className="absolute left-0 right-0 pointer-events-none z-50"
@@ -77,7 +109,6 @@ const DocumentLayout: React.FC<DocumentLayoutProps> = ({ children }) => {
                             />
                         </div>
                     )}
-
                     <div
                         ref={contentRef}
                         className={`
@@ -86,7 +117,7 @@ const DocumentLayout: React.FC<DocumentLayoutProps> = ({ children }) => {
                             mx-auto 
                             overflow-auto
                             relative z-30
-                            ${fontWeight === 'bold' ? 'font-bold' : 'font-normal'}
+                            ${fontWeight === 'bold' ? 'bold' : ''}
                             ${fontStyle === 'italic' ? 'italic' : ''}
                             ${textDecoration === 'underline' ? 'underline' : ''}
                         `}
@@ -98,10 +129,18 @@ const DocumentLayout: React.FC<DocumentLayoutProps> = ({ children }) => {
                         }}
                     >
                         {children}
+                        
                     </div>
                 </div>
             </div>
-        </div>
+            <Sidebar 
+                        onSummarize={handleSummarize} 
+                        summary={summary} 
+                        isSidebarOpen={isSidebarOpen} 
+                        setSidebarOpen={setSidebarOpen} 
+                    />
+            </div>
+       
     );
 };
 

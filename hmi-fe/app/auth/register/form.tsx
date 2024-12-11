@@ -30,7 +30,7 @@ export default function RegisterForm() {
     };
    
     return (
-        <div className="min-h-screen w-full flex">
+        <div className="min-h-screen w-full flex ">
             {/* Left side - Background Image */}
             <div className="hidden desktop:block desktop:w-1/3 laptop:block laptop:w-1/3 relative bg-auth-image">
                 <div className="absolute bottom-8 left-8 text-white text-sm">

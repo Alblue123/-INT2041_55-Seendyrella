@@ -129,7 +129,7 @@ export default function FileLibrary() {
     };
     return (
         <div className="w-full h-screen flex flex-col items-center bg-gray-100 pt-12">
-            <h1 className="text-4xl font-bold text-blue-800 pb-12">Your Library</h1>
+            <h1 className="text-4xl font-bold text-blue-800 pb-12 pt-16">Your Library</h1>
             <div className="overflow-x-auto w-[60rem]">
                 <table className="w-full border-collapse bg-white rounded-lg shadow-lg">
                     <thead>

@@ -3,6 +3,7 @@ import { useState } from "react";
 import React from "react";
 import { useRouter } from "next/navigation"; 
 import "@/app/globals.css";
+import "./upload.css"
 
 export default function BookUpLoadingPage() {
     const [file, setFile] = useState<File | null>(null); 
@@ -87,8 +88,8 @@ export default function BookUpLoadingPage() {
 
     return (
 <main className="flex-1 flex flex-col items-center justify-start p-12 h-screen" style={{ background: 'linear-gradient(to bottom, #dfe8ff, #ffffff)' }}>
-<h2 className="text-2xl font-bold text-blue-800 mb-2">
-                Your best way to read your document
+    <div className="uploading_container">
+    <h2 className="text-2xl font-bold text-blue-800 mb-2 text-center">                Your best way to read your document
             </h2>
             <div className="relative flex items-center justify-center min-h-96">
                 <div
@@ -143,6 +144,7 @@ export default function BookUpLoadingPage() {
                         <p className="text-gray-600 text-sm mt-4">{responseMessage}</p>
                     )}
                 </div>
+            </div>
             </div>
         </main>
     );

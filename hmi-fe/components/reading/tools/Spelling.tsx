@@ -2,39 +2,46 @@
 import React, { useState, useEffect } from "react";
 import {
   Button,
+  Popover,
+  PopoverTrigger,
+  PopoverContent,
 } from "@nextui-org/react";
-import { HiMiniSpeakerWave } from "react-icons/hi2";
-
+import { FaSpellCheck } from "react-icons/fa";
 import { useFormatting } from "../formatting/UseFormatting";
 
-export const PlayAudio: React.FC = () => {
-  const [isOnModeAudio, setIsOnModeAudio] = useState(false);
+export const Spelling: React.FC = () => {
+  const [isOnMode, setIsOnMode] = useState(false);
   useEffect(() => {
     document.addEventListener("mouseup", handleAudio);
     return () => {
       document.removeEventListener("mouseup", handleAudio);
     };
-  }, [isOnModeAudio]);
+  }, [isOnMode]);
   const handleClick = () => {
-    if (isOnModeAudio) {
-      setIsOnModeAudio(false);
+    if (isOnMode) {
+      setIsOnMode(false);
       console.log("Audio function is off");
     } else {
-      setIsOnModeAudio(true);
+      setIsOnMode(true);
       console.log("Audio function is on");
     }
   };
+    const splitTextIntoLetters = (text: string): string => {
+        return text.split('').join(' ');
+      };  
+  
 
   const handleAudio = async () => {
-    if (isOnModeAudio) {
+    if (isOnMode) {
       const selection = window.getSelection();
       if (selection && selection.toString()) {
-        const text = selection.toString();
+        const selected_text = selection.toString();
+        const text = splitTextIntoLetters(selected_text);
+
         console.log("Selected text:", text);
         const user_id = 'yRyXEC1EG2bK6XxzQuw3SgHmfHz2';
         const secret_key = '322c3ca0457e4cbb9d0f992d64bcbe3c';
         const url ='https://api.play.ht/api/v2/tts/stream'; 
-
         const options = {
           method: "POST",
           headers: {
@@ -76,10 +83,10 @@ export const PlayAudio: React.FC = () => {
       <Button
         variant="light"
         isIconOnly
-        className={`min-w-[40px] ${isOnModeAudio ? "bg-gray-200" : ""}`}
+        className={`min-w-[40px] ${isOnMode ? "bg-gray-200" : ""}`}
         onClick={handleClick}
       >
-        <HiMiniSpeakerWave/>
+        <FaSpellCheck />
       </Button>
       <div></div>
     </>

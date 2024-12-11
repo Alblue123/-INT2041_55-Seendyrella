@@ -13,21 +13,23 @@ import { ReadingMask } from './tools/ReadingMask';
 import { BackgroundColor } from './tools/BackgroundColor';
 import { ReadingRuler } from './tools/ReadingRuler';
 import SaveDocument from './tools/SaveDocument';
-
+import {Sidebar} from './tools/summarize'
+import "@/app/globals.css";
+import {NewFontWeight} from './tools/NewFontWeight'
+import {Spelling} from './tools/Spelling'
 interface TextFormattingToolbarProps {
     isLoggedIn: boolean;
     onSave: () => void;
 }
-
-
 export default function TextFormattingToolbar({ isLoggedIn, onSave }: TextFormattingToolbarProps) {
-
     return (
-        <div className="flex justify-center items-center gap-2 p-2 border rounded-lg bg-white shadow-sm sticky">
+        <div className="tools_bar">
             {/* Font Weight */}
-            <FontWeight />
+            {/* <NewFontWeight /> */}
+            <NewFontWeight/>
 
             {/* Line Height */}
+
             <LineSpacing />
             
             {/* Letter Spacing */}
@@ -51,6 +53,7 @@ export default function TextFormattingToolbar({ isLoggedIn, onSave }: TextFormat
             <ReadingMask />
 
             <PlayAudio/>
+            <Spelling/>
             <Eraser/>
 
 

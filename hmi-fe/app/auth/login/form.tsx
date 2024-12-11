@@ -16,6 +16,8 @@ export default function LoginForm() {
             redirect: false,
         });
 
+        
+
         if (response?.error) {
             console.error("Failed to sign in");
         } else {
